@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import FormTextInput from '../components/FormTextInput';
-import ClickButton from '../components/SubmitButton';
+import LoginButton from '../components/buttons/LoginButton';
 
-function UserSignup(): JSX.Element {
+function UserLogin(): JSX.Element {
   const _placeholderText = 'Input text here...';
 
   return (
@@ -12,19 +12,14 @@ function UserSignup(): JSX.Element {
         <Text style={styles.sectionTitle}>Sign Up</Text>
       </View>
       <FormTextInput
-        input_text="First name"
+        input_text="Username"
         placeholder_text={_placeholderText}
       />
       <FormTextInput
-        input_text="Last name"
+        input_text="Password"
         placeholder_text={_placeholderText}
       />
-      <FormTextInput
-        input_text="Date of birth"
-        placeholder_text={_placeholderText}
-      />
-      <FormTextInput input_text="Email" placeholder_text={_placeholderText} />
-      <ClickButton />
+      <LoginButton />
     </View>
   );
 }
@@ -56,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserSignup;
+export default UserLogin;

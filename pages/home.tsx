@@ -1,34 +1,46 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import ClickButton from '../components/SubmitButton';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import SettingsButton from '../components/buttons/SettingsButton';
+import SignUpButton from '../components/buttons/SignUpButton';
 
-function Home(): JSX.Element {
+type homeProps = {
+  componentId: string;
+};
+
+function Home(props: homeProps): JSX.Element {
   type GreetingProps = {
     name: string;
   };
 
   const Greeting = (props: GreetingProps) => {
     return (
-      <View style={styles.center}>
-        <Text>Hello {props.name}!</Text>
+      <View style={styles.container}>
+        <Text>
+          Hello {props.name}!{'\n'}
+        </Text>
+        <Text>Welcome to your Wod & Beyond home screen!!! 😜 😜 😜</Text>
       </View>
     );
   };
 
   const LotsOfGreetings = () => {
     return (
-      <View style={[styles.flexCenter, {top: 50}]}>
-        <Greeting name="Rexxar" />
-        <Greeting name="Jaina" />
-        <Greeting name="Valeera" />
+      <View style={[styles.flexCenter]}>
+        <Greeting name="James" />
+        <Text>Not a user? Hit the button below to sign up!</Text>
+        <SignUpButton componentId={props.componentId} />
       </View>
     );
   };
 
   return (
     <>
+      <Header />
       <LotsOfGreetings />
-      <ClickButton />
+      <SettingsButton componentId={props.componentId} />
+      <Footer />
     </>
   );
 }
@@ -50,7 +62,8 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: '700',
   },
-  center: {
+  container: {
+    flex: 3,
     alignItems: 'center',
   },
   flexCenter: {
@@ -59,5 +72,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+Home.options = {
+  topBar: {
+    title: {
+      text: 'Home',
+      color: 'white',
+    },
+    background: {
+      color: '#4d089a',
+    },
+  },
+  bottomTab: {
+    text: 'Home',
+  },
+};
 
 export default Home;
