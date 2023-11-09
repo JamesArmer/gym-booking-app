@@ -1,8 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import SettingsButton from '../components/buttons/SettingsButton';
 import SignUpButton from '../components/buttons/SignUpButton';
 
 type homeProps = {
@@ -25,22 +24,17 @@ function Home(props: homeProps): JSX.Element {
     );
   };
 
-  const LotsOfGreetings = () => {
-    return (
-      <View style={[styles.flexCenter]}>
-        <Greeting name="James" />
-        <Text>Not a user? Hit the button below to sign up!</Text>
-        <SignUpButton componentId={props.componentId} />
-      </View>
-    );
-  };
-
   return (
     <>
       <Header />
-      <LotsOfGreetings />
-      <SettingsButton componentId={props.componentId} />
-      <Footer />
+      <ScrollView>
+        <View style={[styles.flexCenter]}>
+          <Greeting name="James" />
+          <Text>Not a user? Hit the button below to sign up!</Text>
+          <SignUpButton componentId={props.componentId} />
+        </View>
+        <Footer />
+      </ScrollView>
     </>
   );
 }
@@ -85,6 +79,7 @@ Home.options = {
   },
   bottomTab: {
     text: 'Home',
+    icon: require('../public/home.png'),
   },
 };
 

@@ -56,4 +56,16 @@ const styles = StyleSheet.create({
   },
 });
 
+UserSignup.options = {
+  topBar: {
+    title: {
+      text: 'Sign Up',
+      color: 'white',
+    },
+    background: {
+      color: '#4d089a',
+    },
+  },
+};
+
 export default UserSignup;

@@ -3,9 +3,15 @@ import Home from './pages/Home';
 import Settings from './pages/Settings';
 import UserLogin from './pages/UserLogin';
 import UserSignup from './pages/UserSignup';
+import ClassSchedule from './pages/ClassSchedule';
+import Workout from './pages/Workout';
+import Profile from './pages/Profile';
 
 Navigation.registerComponent('Login', () => UserLogin);
 Navigation.registerComponent('Home', () => Home);
+Navigation.registerComponent('Schedule', () => ClassSchedule);
+Navigation.registerComponent('Workout', () => Workout);
+Navigation.registerComponent('Profile', () => Profile);
 Navigation.registerComponent('Settings', () => Settings);
 Navigation.registerComponent('SignUp', () => UserSignup);
 
@@ -29,7 +35,29 @@ export const mainRoot = {
             children: [
               {
                 component: {
-                  name: 'Settings',
+                  name: 'Schedule',
+                },
+              },
+            ],
+          },
+        },
+        {
+          stack: {
+            children: [
+              {
+                component: {
+                  name: 'Workout',
+                },
+              },
+            ],
+          },
+        },
+        {
+          stack: {
+            children: [
+              {
+                component: {
+                  name: 'Profile',
                 },
               },
             ],
@@ -62,9 +90,14 @@ Navigation.setDefaultOptions({
       color: '#4d089a',
     },
   },
+  bottomTabs: {
+    animate: false,
+    titleDisplayMode: 'alwaysShow',
+  },
   bottomTab: {
     fontSize: 14,
     selectedFontSize: 14,
+    selectedIconColor: '#4d089a',
   },
 });
 
@@ -73,5 +106,5 @@ Navigation.events().registerAppLaunchedListener(async () => {
 });
 
 function isLoggedIn() {
-  return false;
+  return true;
 }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
 class Header extends Component {
   render() {
@@ -13,7 +13,6 @@ class Header extends Component {
 
 const styles = StyleSheet.create({
   headerContainer: {
-    flex: 1,
     alignItems: 'center',
     paddingTop: 20,
     paddingBottom: 20,

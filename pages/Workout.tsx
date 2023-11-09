@@ -1,11 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-function Settings(): JSX.Element {
+function Workout(): JSX.Element {
   return (
     <View style={styles.flexCenter}>
-      <Text>This is the settings page</Text>
-      <Text>All icons from https://icons8.com</Text>
+      <Text>This is the workout page</Text>
     </View>
   );
 }
@@ -18,16 +17,20 @@ const styles = StyleSheet.create({
   },
 });
 
-Settings.options = {
+Workout.options = {
   topBar: {
     title: {
-      text: 'Settings',
+      text: 'Workout',
       color: 'white',
     },
     background: {
       color: '#4d089a',
     },
   },
+  bottomTab: {
+    text: 'Workout',
+    icon: require('../public/dumbbell.png'),
+  },
 };
 
-export default Settings;
+export default Workout;

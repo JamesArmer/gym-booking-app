@@ -9,7 +9,7 @@ function UserLogin(): JSX.Element {
   return (
     <View style={styles.sectionContainer}>
       <View style={styles.titleContainer}>
-        <Text style={styles.sectionTitle}>Sign Up</Text>
+        <Text style={styles.sectionTitle}>Login</Text>
       </View>
       <FormTextInput
         input_text="Username"
@@ -50,5 +50,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+UserLogin.options = {
+  topBar: {
+    title: {
+      text: 'Login',
+      color: 'white',
+    },
+    background: {
+      color: '#4d089a',
+    },
+  },
+};
 
 export default UserLogin;
