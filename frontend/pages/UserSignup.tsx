@@ -24,6 +24,10 @@ function UserSignup(): JSX.Element {
         placeholder_text={_placeholderText}
       />
       <FormTextInput input_text="Email" placeholder_text={_placeholderText} />
+      <FormTextInput
+        input_text="Phone number"
+        placeholder_text={_placeholderText}
+      />
       <ClickButton />
     </View>
   );
