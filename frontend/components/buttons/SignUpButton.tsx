@@ -16,13 +16,6 @@ class SignUpButton extends Component<signupButtonProps> {
             return Navigation.push(this.props.componentId, {
               component: {
                 name: 'SignUp',
-                options: {
-                  topBar: {
-                    title: {
-                      text: 'Sign Up',
-                    },
-                  },
-                },
               },
             });
           }}>

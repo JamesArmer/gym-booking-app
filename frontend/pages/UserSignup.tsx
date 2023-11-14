@@ -1,22 +1,28 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 import SubmitButton from '../components/buttons/SubmitButton';
+import DatePicker from 'react-native-date-picker';
 
-function UserSignup(): JSX.Element {
+type signupProps = {
+  componentId: string;
+};
+
+function UserSignup(props: signupProps): JSX.Element {
   const placeholderText = 'Input text here...';
 
   interface IUserDetails {
     firstName: string;
     lastName: string;
-    dateOfBirth: string;
+    dateOfBirth: Date;
     email: string;
     phoneNumber: string;
   }
 
+  const [open, setOpen] = useState(false);
   const [userDetails, setUserDetails] = useState<IUserDetails>({
     firstName: '',
     lastName: '',
-    dateOfBirth: '',
+    dateOfBirth: new Date(),
     email: '',
     phoneNumber: '',
   });
@@ -54,16 +60,27 @@ function UserSignup(): JSX.Element {
       />
       <Text style={styles.inputTitle}>Date of birth</Text>
       <TextInput
+        editable={false}
         style={styles.inputContainer}
-        placeholder={placeholderText}
-        value={userDetails.dateOfBirth}
-        onChangeText={text =>
+        value={userDetails.dateOfBirth.toLocaleDateString('en-GB')}
+        keyboardType="numeric"
+      />
+      <Button title="🗓️" onPress={() => setOpen(true)} />
+      <DatePicker
+        modal
+        open={open}
+        date={userDetails.dateOfBirth}
+        mode="date"
+        onConfirm={date => {
+          setOpen(false);
           setUserDetails(userDetails => ({
             ...userDetails,
-            dateOfBirth: text,
-          }))
-        }
-        maxLength={40}
+            dateOfBirth: date,
+          }));
+        }}
+        onCancel={() => {
+          setOpen(false);
+        }}
       />
       <Text style={styles.inputTitle}>Email</Text>
       <TextInput
@@ -92,7 +109,7 @@ function UserSignup(): JSX.Element {
         keyboardType="numeric"
         maxLength={10}
       />
-      <SubmitButton user={userDetails} />
+      <SubmitButton user={userDetails} componentId={props.componentId} />
     </View>
   );
 }

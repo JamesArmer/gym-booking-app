@@ -19,11 +19,8 @@ router.get(
 
 router.post(
   '/create',
-  async function (
-    req: {body: {user: any}},
-    res: {send: (arg0: string) => void},
-  ) {
-    let newUser = new UserModel(req.body.user);
+  async function (req: {body: any}, res: {send: (arg0: string) => void}) {
+    let newUser = new UserModel(req.body);
     newUser.userId = uuidv4();
     await newUser.save();
     res.send(`Created user with ID: ${newUser.userId}`);
