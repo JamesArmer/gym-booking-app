@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
 import {Navigation} from 'react-native-navigation';
-import {mainRoot} from '../..';
 
 type signupButtonProps = {
   componentId: string;

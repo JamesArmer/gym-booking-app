@@ -1,34 +1,98 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
-import FormTextInput from '../components/FormTextInput';
-import ClickButton from '../components/buttons/SubmitButton';
+import SubmitButton from '../components/buttons/SubmitButton';
 
 function UserSignup(): JSX.Element {
-  const _placeholderText = 'Input text here...';
+  const placeholderText = 'Input text here...';
+
+  interface IUserDetails {
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+    email: string;
+    phoneNumber: string;
+  }
+
+  const [userDetails, setUserDetails] = useState<IUserDetails>({
+    firstName: '',
+    lastName: '',
+    dateOfBirth: '',
+    email: '',
+    phoneNumber: '',
+  });
 
   return (
     <View style={styles.sectionContainer}>
       <View style={styles.titleContainer}>
         <Text style={styles.sectionTitle}>Sign Up</Text>
       </View>
-      <FormTextInput
-        input_text="First name"
-        placeholder_text={_placeholderText}
+      <Text style={styles.inputTitle}>First name</Text>
+      <TextInput
+        style={styles.inputContainer}
+        placeholder={placeholderText}
+        value={userDetails.firstName}
+        onChangeText={text =>
+          setUserDetails(userDetails => ({
+            ...userDetails,
+            firstName: text,
+          }))
+        }
+        maxLength={40}
       />
-      <FormTextInput
-        input_text="Last name"
-        placeholder_text={_placeholderText}
+      <Text style={styles.inputTitle}>Last name</Text>
+      <TextInput
+        style={styles.inputContainer}
+        placeholder={placeholderText}
+        value={userDetails.lastName}
+        onChangeText={text =>
+          setUserDetails(userDetails => ({
+            ...userDetails,
+            lastName: text,
+          }))
+        }
+        maxLength={40}
       />
-      <FormTextInput
-        input_text="Date of birth"
-        placeholder_text={_placeholderText}
+      <Text style={styles.inputTitle}>Date of birth</Text>
+      <TextInput
+        style={styles.inputContainer}
+        placeholder={placeholderText}
+        value={userDetails.dateOfBirth}
+        onChangeText={text =>
+          setUserDetails(userDetails => ({
+            ...userDetails,
+            dateOfBirth: text,
+          }))
+        }
+        maxLength={40}
       />
-      <FormTextInput input_text="Email" placeholder_text={_placeholderText} />
-      <FormTextInput
-        input_text="Phone number"
-        placeholder_text={_placeholderText}
+      <Text style={styles.inputTitle}>Email</Text>
+      <TextInput
+        style={styles.inputContainer}
+        placeholder={placeholderText}
+        value={userDetails.email}
+        onChangeText={text =>
+          setUserDetails(userDetails => ({
+            ...userDetails,
+            email: text,
+          }))
+        }
+        maxLength={40}
       />
-      <ClickButton />
+      <Text style={styles.inputTitle}>Phone number</Text>
+      <TextInput
+        style={styles.inputContainer}
+        placeholder={placeholderText}
+        value={userDetails.phoneNumber}
+        onChangeText={text =>
+          setUserDetails(userDetails => ({
+            ...userDetails,
+            phoneNumber: text,
+          }))
+        }
+        keyboardType="numeric"
+        maxLength={10}
+      />
+      <SubmitButton user={userDetails} />
     </View>
   );
 }
@@ -57,6 +121,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  inputTitle: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  inputContainer: {
+    borderWidth: 1,
+    height: 40,
   },
 });
 

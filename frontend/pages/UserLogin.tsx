@@ -1,23 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
-import FormTextInput from '../components/FormTextInput';
 import LoginButton from '../components/buttons/LoginButton';
 
 function UserLogin(): JSX.Element {
-  const _placeholderText = 'Input text here...';
+  const placeholderText = 'Input text here...';
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <View style={styles.sectionContainer}>
       <View style={styles.titleContainer}>
         <Text style={styles.sectionTitle}>Login</Text>
       </View>
-      <FormTextInput
-        input_text="Username"
-        placeholder_text={_placeholderText}
+      <Text style={styles.inputTitle}>Username</Text>
+      <TextInput
+        style={styles.inputContainer}
+        placeholder={placeholderText}
+        value={username}
+        onChangeText={text => setUsername(text)}
+        maxLength={40}
       />
-      <FormTextInput
-        input_text="Password"
-        placeholder_text={_placeholderText}
+      <Text style={styles.inputTitle}>Password</Text>
+      <TextInput
+        style={styles.inputContainer}
+        placeholder={placeholderText}
+        value={password}
+        onChangeText={text => setPassword(text)}
+        maxLength={40}
       />
       <LoginButton />
     </View>
@@ -48,6 +58,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  inputTitle: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  inputContainer: {
+    borderWidth: 1,
+    height: 40,
   },
 });
 

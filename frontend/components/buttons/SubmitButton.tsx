@@ -1,28 +1,32 @@
 import React, {Component} from 'react';
 import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
+import {BASE_URL} from '@env';
 
-class SubmitButton extends Component {
+type submitButtonProps = {
+  user: {
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+    email: string;
+    phoneNumber: string;
+  };
+};
+
+class SubmitButton extends Component<submitButtonProps> {
   render() {
     return (
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            fetch('http://localhost:3000/users/create', {
+            console.log(BASE_URL);
+            fetch(`${BASE_URL}/users/create`, {
               method: 'POST',
               headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({
-                user: {
-                  firstName: 'James',
-                  lastName: 'Armer',
-                  dateOfBirth: '2000-01-01',
-                  email: 'blah@blah.com',
-                  phoneNumber: '+91 78458 40347',
-                },
-              }),
+              body: JSON.stringify(this.props),
             });
           }}>
           <Text style={{color: 'white'}}>Submit</Text>
