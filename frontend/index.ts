@@ -6,6 +6,7 @@ import UserSignup from './pages/UserSignup';
 import ClassSchedule from './pages/ClassSchedule';
 import Workout from './pages/Workout';
 import Profile from './pages/Profile';
+import axios from 'axios';
 
 Navigation.registerComponent('Login', () => UserLogin);
 Navigation.registerComponent('Home', () => Home);
@@ -108,3 +109,7 @@ Navigation.events().registerAppLaunchedListener(async () => {
 function isLoggedIn() {
   return true;
 }
+
+axios.defaults.baseURL = process.env.BASE_URL;
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers.post['Accept'] = 'application/json';

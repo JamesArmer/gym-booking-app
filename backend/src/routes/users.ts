@@ -1,5 +1,3 @@
-import {v4 as uuidv4} from 'uuid';
-
 const UserModel = require('../models/user');
 
 var express = require('express');
@@ -21,9 +19,8 @@ router.post(
   '/create',
   async function (req: {body: any}, res: {send: (arg0: string) => void}) {
     let newUser = new UserModel(req.body);
-    newUser.userId = uuidv4();
     await newUser.save();
-    res.send(`Created user with ID: ${newUser.userId}`);
+    res.send(`Created user with ID: ${newUser._id}`);
   },
 );
 

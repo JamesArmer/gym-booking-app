@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, TouchableOpacity, Text, View, Alert} from 'react-native';
 import {BASE_URL} from '@env';
 import {Navigation} from 'react-native-navigation';
+import axios from 'axios';
 
 type submitButtonProps = {
   user: {
@@ -27,14 +28,8 @@ class SubmitButton extends Component<submitButtonProps> {
               this.props.emailError === false &&
               this.props.phoneError === false
             ) {
-              await fetch(`${BASE_URL}/users/create`, {
-                method: 'POST',
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(this.props.user),
-              })
+              await axios
+                .post('/users/create', this.props.user)
                 .then(() => {
                   Navigation.push(this.props.componentId, {
                     component: {
