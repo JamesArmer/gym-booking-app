@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 import SubmitButton from '../components/buttons/SubmitButton';
 import DatePicker from 'react-native-date-picker';
+import {validateEmail, validatePhoneNumber} from '../utility/validation';
 
 type signupProps = {
   componentId: string;
@@ -26,6 +27,8 @@ function UserSignup(props: signupProps): JSX.Element {
     email: '',
     phoneNumber: '',
   });
+  const [emailError, setEmailError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
 
   return (
     <View style={styles.sectionContainer}>
@@ -83,10 +86,18 @@ function UserSignup(props: signupProps): JSX.Element {
         }}
       />
       <Text style={styles.inputTitle}>Email</Text>
+      {emailError && <Text style={styles.errorMessage}>Invalid email</Text>}
       <TextInput
-        style={styles.inputContainer}
+        style={[
+          styles.inputContainer,
+          emailError && styles.errorInputContainer,
+        ]}
         placeholder={placeholderText}
         value={userDetails.email}
+        onBlur={() => {
+          let isValid = validateEmail(userDetails.email);
+          setEmailError(!isValid);
+        }}
         onChangeText={text =>
           setUserDetails(userDetails => ({
             ...userDetails,
@@ -96,10 +107,20 @@ function UserSignup(props: signupProps): JSX.Element {
         maxLength={40}
       />
       <Text style={styles.inputTitle}>Phone number</Text>
+      {phoneError && (
+        <Text style={styles.errorMessage}>Invalid phone number</Text>
+      )}
       <TextInput
-        style={styles.inputContainer}
+        style={[
+          styles.inputContainer,
+          phoneError && styles.errorInputContainer,
+        ]}
         placeholder={placeholderText}
         value={userDetails.phoneNumber}
+        onBlur={() => {
+          let isValid = validatePhoneNumber(userDetails.phoneNumber);
+          setPhoneError(!isValid);
+        }}
         onChangeText={text =>
           setUserDetails(userDetails => ({
             ...userDetails,
@@ -109,7 +130,12 @@ function UserSignup(props: signupProps): JSX.Element {
         keyboardType="numeric"
         maxLength={10}
       />
-      <SubmitButton user={userDetails} componentId={props.componentId} />
+      <SubmitButton
+        user={userDetails}
+        componentId={props.componentId}
+        emailError={emailError}
+        phoneError={phoneError}
+      />
     </View>
   );
 }
@@ -147,6 +173,12 @@ const styles = StyleSheet.create({
   inputContainer: {
     borderWidth: 1,
     height: 40,
+  },
+  errorInputContainer: {
+    borderColor: 'red',
+  },
+  errorMessage: {
+    color: 'red',
   },
 });
 

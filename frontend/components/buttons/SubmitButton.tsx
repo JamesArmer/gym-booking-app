@@ -12,6 +12,8 @@ type submitButtonProps = {
     phoneNumber: string;
   };
   componentId: string;
+  emailError: boolean;
+  phoneError: boolean;
 };
 
 class SubmitButton extends Component<submitButtonProps> {
@@ -21,27 +23,40 @@ class SubmitButton extends Component<submitButtonProps> {
         <TouchableOpacity
           style={styles.button}
           onPress={async () => {
-            await fetch(`${BASE_URL}/users/create`, {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(this.props.user),
-            })
-              .then(() => {
-                Navigation.push(this.props.componentId, {
-                  component: {
-                    name: 'Home',
-                  },
-                });
-                Alert.alert('User Sign Up', 'Sign up successfully completed!', [
-                  {text: 'OK', onPress: () => console.log('OK Pressed')},
-                ]);
+            if (
+              this.props.emailError === false &&
+              this.props.phoneError === false
+            ) {
+              await fetch(`${BASE_URL}/users/create`, {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(this.props.user),
               })
-              .catch(error => {
-                console.error(error);
-              });
+                .then(() => {
+                  Navigation.push(this.props.componentId, {
+                    component: {
+                      name: 'Home',
+                    },
+                  });
+                  Alert.alert(
+                    'User Sign Up',
+                    'Sign up successfully completed!',
+                    [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+                  );
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+            } else {
+              Alert.alert(
+                'User Sign Up',
+                'Validation errors in the above fields - please fix before submitting.',
+                [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+              );
+            }
           }}>
           <Text style={{color: 'white'}}>Submit</Text>
         </TouchableOpacity>
