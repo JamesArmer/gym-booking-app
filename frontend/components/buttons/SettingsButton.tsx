@@ -16,13 +16,6 @@ class SettingsButton extends Component<settingsButtonProps> {
             return Navigation.push(this.props.componentId, {
               component: {
                 name: 'Settings',
-                options: {
-                  topBar: {
-                    title: {
-                      text: 'Settings',
-                    },
-                  },
-                },
               },
             });
           }}>

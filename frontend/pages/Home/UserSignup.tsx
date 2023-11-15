@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
-import SubmitButton from '../components/buttons/SubmitButton';
+import SubmitButton from '../../components/buttons/SubmitButton';
 import DatePicker from 'react-native-date-picker';
-import {validateEmail, validatePhoneNumber} from '../utility/validation';
+import {validateEmail, validatePhoneNumber} from '../../utility/validation';
+import {IUserDetails} from '../../utility/types';
 
 type signupProps = {
   componentId: string;
@@ -10,14 +11,6 @@ type signupProps = {
 
 function UserSignup(props: signupProps): JSX.Element {
   const placeholderText = 'Input text here...';
-
-  interface IUserDetails {
-    firstName: string;
-    lastName: string;
-    dateOfBirth: Date;
-    email: string;
-    phoneNumber: string;
-  }
 
   const [open, setOpen] = useState(false);
   const [userDetails, setUserDetails] = useState<IUserDetails>({
@@ -172,6 +165,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     borderWidth: 1,
+    borderRadius: 16,
     height: 40,
   },
   errorInputContainer: {

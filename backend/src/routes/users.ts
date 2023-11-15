@@ -10,7 +10,7 @@ router.get(
     req: {params: {userId: string}},
     res: {send: (arg0: any) => void},
   ) {
-    let user = await UserModel.findOne({userId: req.params.userId});
+    let user = await UserModel.findOne({_id: req.params.userId});
     res.send(user);
   },
 );

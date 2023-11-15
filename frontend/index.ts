@@ -1,12 +1,16 @@
 import {Navigation} from 'react-native-navigation';
-import Home from './pages/Home';
-import Settings from './pages/Settings';
+import Home from './pages/Home/Home';
+import Settings from './pages/Profile/Settings';
 import UserLogin from './pages/UserLogin';
-import UserSignup from './pages/UserSignup';
+import UserSignup from './pages/Home/UserSignup';
 import ClassSchedule from './pages/ClassSchedule';
 import Workout from './pages/Workout';
-import Profile from './pages/Profile';
+import Profile from './pages/Profile/Profile';
 import axios from 'axios';
+import ProfileDetails from './pages/Profile/ProfileDetails';
+import MembershipDetails from './pages/Profile/MembershipDetails';
+import BookingHistory from './pages/Profile/BookingHistory';
+import PaymentDetails from './pages/Profile/PaymentDetails';
 
 Navigation.registerComponent('Login', () => UserLogin);
 Navigation.registerComponent('Home', () => Home);
@@ -15,6 +19,10 @@ Navigation.registerComponent('Workout', () => Workout);
 Navigation.registerComponent('Profile', () => Profile);
 Navigation.registerComponent('Settings', () => Settings);
 Navigation.registerComponent('SignUp', () => UserSignup);
+Navigation.registerComponent('MembershipDetails', () => MembershipDetails);
+Navigation.registerComponent('BookingHistory', () => BookingHistory);
+Navigation.registerComponent('ProfileDetails', () => ProfileDetails);
+Navigation.registerComponent('PaymentDetails', () => PaymentDetails);
 
 export const mainRoot = {
   root: {

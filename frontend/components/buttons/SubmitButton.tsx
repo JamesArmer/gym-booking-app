@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {StyleSheet, TouchableOpacity, Text, View, Alert} from 'react-native';
-import {BASE_URL} from '@env';
 import {Navigation} from 'react-native-navigation';
 import axios from 'axios';
 

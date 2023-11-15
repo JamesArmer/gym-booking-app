@@ -1,11 +1,15 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import Header from '../components/Header';
 
 function Workout(): JSX.Element {
   return (
-    <View style={styles.flexCenter}>
-      <Text>This is the workout page</Text>
-    </View>
+    <ScrollView>
+      <Header />
+      <View style={styles.flexCenter}>
+        <Text>This is the workout page</Text>
+      </View>
+    </ScrollView>
   );
 }
 

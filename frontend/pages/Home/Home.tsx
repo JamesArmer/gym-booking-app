@@ -1,8 +1,8 @@
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import SignUpButton from '../components/buttons/SignUpButton';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import SignUpButton from '../../components/buttons/SignUpButton';
 
 type homeProps = {
   componentId: string;
@@ -79,7 +79,7 @@ Home.options = {
   },
   bottomTab: {
     text: 'Home',
-    icon: require('../public/home.png'),
+    icon: require('../../public/home.png'),
   },
 };
 
