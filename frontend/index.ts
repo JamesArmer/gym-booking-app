@@ -11,6 +11,7 @@ import ProfileDetails from './pages/Profile/ProfileDetails';
 import MembershipDetails from './pages/Profile/MembershipDetails';
 import BookingHistory from './pages/Profile/BookingHistory';
 import PaymentDetails from './pages/Profile/PaymentDetails';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 Navigation.registerComponent('Login', () => UserLogin);
 Navigation.registerComponent('Home', () => Home);
@@ -111,11 +112,16 @@ Navigation.setDefaultOptions({
 });
 
 Navigation.events().registerAppLaunchedListener(async () => {
-  Navigation.setRoot(isLoggedIn() ? mainRoot : loginRoot);
+  Navigation.setRoot((await isLoggedIn()) ? mainRoot : loginRoot);
 });
 
-function isLoggedIn() {
-  return true;
+async function isLoggedIn() {
+  const userId = await AsyncStorage.getItem('user-id');
+  if (userId != null) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 axios.defaults.baseURL = process.env.BASE_URL;

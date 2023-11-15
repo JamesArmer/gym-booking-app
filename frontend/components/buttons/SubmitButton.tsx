@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, TouchableOpacity, Text, View, Alert} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type submitButtonProps = {
   user: {
@@ -29,6 +30,9 @@ class SubmitButton extends Component<submitButtonProps> {
             ) {
               await axios
                 .post('/users/create', this.props.user)
+                .then(response => {
+                  AsyncStorage.setItem('user-id', response.data.userId);
+                })
                 .then(() => {
                   Navigation.push(this.props.componentId, {
                     component: {

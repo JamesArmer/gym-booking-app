@@ -15,13 +15,10 @@ router.get(
   },
 );
 
-router.post(
-  '/create',
-  async function (req: {body: any}, res: {send: (arg0: string) => void}) {
-    let newUser = new UserModel(req.body);
-    await newUser.save();
-    res.send(`Created user with ID: ${newUser._id}`);
-  },
-);
+router.post('/create', async function (req: {body: any}, res: any) {
+  let newUser = new UserModel(req.body);
+  await newUser.save();
+  res.json({userId: newUser._id});
+});
 
 module.exports = router;

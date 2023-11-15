@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import {IUserDetails} from '../../utility/types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function ProfileDetails(): JSX.Element {
   const [isLoading, setLoading] = useState(true);
@@ -21,8 +22,8 @@ function ProfileDetails(): JSX.Element {
 
   const getUserDetails = async () => {
     try {
-      const response = await axios.get(`/users/65548742d09f7094e58b91b4`);
-      // const response = await axios.get(`/users/${props.userId}`);
+      const userId = await AsyncStorage.getItem('user-id');
+      const response = await axios.get(`/users/${userId}`);
       setUserDetails(response.data);
     } catch (error) {
       console.error(error);
