@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {mainRoot} from '../..';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class LoginButton extends Component {
   render() {

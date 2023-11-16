@@ -1,3 +1,5 @@
+import express, {NextFunction, Request, Response} from 'express';
+
 require('dotenv').config();
 
 const mongoose = require('mongoose');
@@ -20,8 +22,6 @@ async function connect() {
 
 connect().catch(err => console.log(err));
 
-var createError = require('http-errors');
-var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -41,20 +41,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-// catch 404 and forward to error handler
-app.use(function (next: any) {
-  next(createError(404));
+// Middleware to handle paths that do not exist
+app.use((_req: Request, res: Response, _next: NextFunction) => {
+  res.status(404).json({error: 'Path Not Found'});
 });
 
-// error handler
-app.use(function (err: any, req: any, res: any) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // send error message
-  res.status(err.status || 500);
-  res.json({error: err});
+// Middleware to handle errors
+app.use(function (
+  err: Error,
+  _req: Request,
+  res: Response,
+  _next: NextFunction,
+) {
+  console.error(err.stack);
+  res.status(500).send('Internal Server Error');
 });
 
 app.listen(port, function () {
