@@ -5,10 +5,13 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 import {IUserDetails} from '../../utility/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+var _userId: string | null;
 
 function ProfileDetails(): JSX.Element {
   const [isLoading, setLoading] = useState(true);
@@ -22,14 +25,20 @@ function ProfileDetails(): JSX.Element {
 
   const getUserDetails = async () => {
     try {
-      const userId = await AsyncStorage.getItem('user-id');
-      const response = await axios.get(`/users/${userId}`);
+      _userId = await AsyncStorage.getItem('user-id');
+      const response = await axios.get(`/users/${_userId}`);
       setUserDetails(response.data);
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const updateUserDetails = async () => {
+    await axios.put(`/users/update/${_userId}`, userDetails).catch(error => {
+      console.error(error);
+    });
   };
 
   useEffect(() => {
@@ -46,11 +55,37 @@ function ProfileDetails(): JSX.Element {
           <View style={styles.sectionContainer}>
             <View style={styles.topField}>
               <Text style={styles.fieldName}>First Name</Text>
-              <Text style={styles.field}>{userDetails.firstName}</Text>
+              <TextInput
+                style={styles.field}
+                value={userDetails.firstName}
+                maxLength={40}
+                onBlur={async () => {
+                  updateUserDetails();
+                }}
+                onChangeText={text =>
+                  setUserDetails(userDetails => ({
+                    ...userDetails,
+                    firstName: text,
+                  }))
+                }
+              />
             </View>
             <View style={styles.topField}>
               <Text style={styles.fieldName}>Last Name</Text>
-              <Text style={styles.field}>{userDetails.lastName}</Text>
+              <TextInput
+                style={styles.field}
+                value={userDetails.lastName}
+                maxLength={40}
+                onBlur={async () => {
+                  updateUserDetails();
+                }}
+                onChangeText={text =>
+                  setUserDetails(userDetails => ({
+                    ...userDetails,
+                    lastName: text,
+                  }))
+                }
+              />
             </View>
             <View style={styles.bottomField}>
               <Text style={styles.fieldName}>Date of Birth</Text>
@@ -62,11 +97,37 @@ function ProfileDetails(): JSX.Element {
           <View style={styles.sectionContainer}>
             <View style={styles.topField}>
               <Text style={styles.fieldName}>Email</Text>
-              <Text style={styles.field}>{userDetails.email}</Text>
+              <TextInput
+                style={styles.field}
+                value={userDetails.email}
+                maxLength={40}
+                onBlur={async () => {
+                  updateUserDetails();
+                }}
+                onChangeText={text =>
+                  setUserDetails(userDetails => ({
+                    ...userDetails,
+                    email: text,
+                  }))
+                }
+              />
             </View>
             <View style={styles.bottomField}>
               <Text style={styles.fieldName}>Phone Number</Text>
-              <Text style={styles.field}>{userDetails.phoneNumber}</Text>
+              <TextInput
+                style={styles.field}
+                value={userDetails.phoneNumber}
+                maxLength={40}
+                onBlur={async () => {
+                  updateUserDetails();
+                }}
+                onChangeText={text =>
+                  setUserDetails(userDetails => ({
+                    ...userDetails,
+                    phoneNumber: text,
+                  }))
+                }
+              />
             </View>
           </View>
         </>
@@ -103,6 +164,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     fontWeight: '500',
+    color: 'gray',
   },
   topField: {
     paddingHorizontal: 10,
