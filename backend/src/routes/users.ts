@@ -3,7 +3,6 @@ import {setToMidnightUTC} from '../utility/functions';
 import express, {NextFunction, Request, Response} from 'express';
 
 const UserModel = require('../models/user');
-
 var router = express.Router();
 
 /* GET single user by ID. */
@@ -44,6 +43,7 @@ router.post(
   },
 );
 
+/* PUT update user */
 router.put(
   '/update/:userId',
   async function (req: Request, res: Response, next: NextFunction) {

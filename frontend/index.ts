@@ -12,6 +12,7 @@ import MembershipDetails from './pages/Profile/MembershipDetails';
 import BookingHistory from './pages/Profile/BookingHistory';
 import PaymentDetails from './pages/Profile/PaymentDetails';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AdminPanel from './pages/Profile/AdminPanel';
 
 Navigation.registerComponent('Login', () => UserLogin);
 Navigation.registerComponent('Home', () => Home);
@@ -19,6 +20,7 @@ Navigation.registerComponent('Schedule', () => ClassSchedule);
 Navigation.registerComponent('Workout', () => Workout);
 Navigation.registerComponent('Profile', () => Profile);
 Navigation.registerComponent('Settings', () => Settings);
+Navigation.registerComponent('AdminPanel', () => AdminPanel);
 Navigation.registerComponent('SignUp', () => UserSignup);
 Navigation.registerComponent('MembershipDetails', () => MembershipDetails);
 Navigation.registerComponent('BookingHistory', () => BookingHistory);

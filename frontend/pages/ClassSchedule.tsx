@@ -7,7 +7,6 @@ function ClassSchedule(): JSX.Element {
     <>
       <View style={styles.container}>
         <Header />
-        <Text>This is the class schedule page</Text>
       </View>
       <View style={styles.listContainer}>
         <SectionList

@@ -25,7 +25,7 @@ function ProfileDetails(): JSX.Element {
 
   const getUserDetails = async () => {
     try {
-      _userId = await AsyncStorage.getItem('user-id');
+      const _userId = await AsyncStorage.getItem('user-id');
       const response = await axios.get(`/users/${_userId}`);
       setUserDetails(response.data);
     } catch (error) {

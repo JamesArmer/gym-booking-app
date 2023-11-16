@@ -28,6 +28,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index.ts');
 var usersRouter = require('./routes/users.ts');
+var classRouter = require('./routes/classes.ts');
+var scheduleRouter = require('./routes/schedules.ts');
 
 var port = process.env.PORT || 3000;
 var app = express();
@@ -40,6 +42,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/classes', classRouter);
+app.use('/schedules', scheduleRouter);
 
 // Middleware to handle paths that do not exist
 app.use((_req: Request, res: Response, _next: NextFunction) => {
