@@ -5,6 +5,4 @@ up:
 	docker-compose up -d
 
 down:
-	docker ps -aq | xargs docker stop | xargs docker rm
-	docker volume prune -f
-	docker image prune -f
+	docker-compose down
