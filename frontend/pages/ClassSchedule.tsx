@@ -1,14 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Alert,
-  Button,
-  FlatList,
-  ScrollView,
-  SectionList,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Alert, Button, SectionList, StyleSheet, Text, View} from 'react-native';
 import Header from '../components/Header';
 import axios from 'axios';
 
@@ -25,6 +16,7 @@ type GymClass = {
 };
 
 function ClassSchedule(): JSX.Element {
+  const [sectionTitle, setSectionTitle] = useState('');
   const [gymClasses, setGymClasses] = useState<GymClass[]>([]);
 
   const handleBookClass = (gymClassId: string) => {
@@ -36,6 +28,7 @@ function ClassSchedule(): JSX.Element {
     await axios
       .get('/gymclasses/daily')
       .then(response => {
+        setSectionTitle(response.data.title);
         setGymClasses(response.data.gymClasses);
       })
       .catch(error => {
@@ -48,98 +41,66 @@ function ClassSchedule(): JSX.Element {
   }, []);
 
   const renderItem = ({item}: {item: GymClass}) => (
-    <View style={{marginVertical: 10, padding: 10, borderBottomWidth: 1}}>
+    <View style={styles.item}>
       <Text>{item.name}</Text>
       <Text>Instructor: {item.instructor}</Text>
-      <Text>Schedule: {item.datetime.toString()}</Text>
+      <Text>
+        Time: {('0' + new Date(item.datetime).getHours()).slice(-2)}:
+        {new Date(item.datetime).getMinutes()}
+      </Text>
       <Text>Capacity: {item.maxCapacity}</Text>
       <Button title="Book Class" onPress={() => handleBookClass(item._id)} />
     </View>
   );
 
+  const renderSectionHeader = ({section}: {section: {title: string}}) => (
+    <Text style={styles.sectionHeader}>{section.title}</Text>
+  );
+
   return (
     <>
-      <View style={styles.container}>
+      <View style={styles.header}>
         <Header />
       </View>
-      <View style={{padding: 10}}>
-        <FlatList
-          data={gymClasses}
-          keyExtractor={item => item._id}
-          renderItem={renderItem}
-        />
-      </View>
-      <View style={styles.listContainer}>
+      <View style={styles.container}>
         <SectionList
+          style={styles.sectionItem}
           sections={[
             {
-              title: 'Week 13/11/23',
-              data: [
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday',
-                'Sunday',
-              ],
-            },
-            {
-              title: 'Week 20/11/23',
-              data: [
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday',
-                'Sunday',
-              ],
-            },
-            {
-              title: 'Week 27/11/23',
-              data: [
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday',
-                'Sunday',
-              ],
+              title: sectionTitle,
+              data: gymClasses,
             },
           ]}
-          renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
-          renderSectionHeader={({section}) => (
-            <Text style={styles.sectionHeader}>{section.title}</Text>
-          )}
-          keyExtractor={item => `basicListEntry-${item}`}></SectionList>
+          keyExtractor={item => item._id}
+          renderItem={renderItem}
+          renderSectionHeader={renderSectionHeader}
+        />
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  header: {
     alignItems: 'center',
   },
+  container: {},
   sectionHeader: {
-    paddingTop: 2,
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 2,
     fontSize: 20,
     fontWeight: 'bold',
-    backgroundColor: 'rgba(247,247,247,1.0)',
+    backgroundColor: 'rgba(230,230,230,1.0)',
   },
-  listContainer: {
-    marginHorizontal: 10,
-    paddingVertical: 10,
+  sectionItem: {
+    marginBottom: 80,
   },
   item: {
     padding: 10,
     fontSize: 18,
-    height: 44,
+    marginVertical: 5,
+    borderBottomWidth: 1,
   },
 });
 

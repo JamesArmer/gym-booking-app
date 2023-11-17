@@ -9,6 +9,7 @@ router.get(
   async function (req: Request, res: Response, next: NextFunction) {
     try {
       const today = new Date();
+      console.log(today);
       today.setHours(0, 0, 0, 0);
       const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
 
@@ -19,7 +20,9 @@ router.get(
         },
       });
 
-      res.json({gymClasses});
+      let sectionTitle = today.toDateString();
+
+      res.json({title: sectionTitle, gymClasses: gymClasses});
     } catch (error: any) {
       console.error(error);
       res.status(400).json({error: error.message});
