@@ -1,6 +1,6 @@
-import {Schema, model} from 'mongoose';
+import {Document, Schema, model} from 'mongoose';
 
-export interface ISchedule {
+export interface ISchedule extends Document {
   monday: {
     enabled: boolean;
     classTimes: string[];

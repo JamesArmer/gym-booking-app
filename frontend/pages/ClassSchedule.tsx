@@ -1,12 +1,73 @@
-import React from 'react';
-import {SectionList, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Alert,
+  Button,
+  FlatList,
+  ScrollView,
+  SectionList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import Header from '../components/Header';
+import axios from 'axios';
+
+type GymClass = {
+  _id: string;
+  name: string;
+  category: string;
+  description: string;
+  datetime: Date;
+  duration: number;
+  maxCapacity: number;
+  currentCapacity: number;
+  instructor?: string;
+};
 
 function ClassSchedule(): JSX.Element {
+  const [gymClasses, setGymClasses] = useState<GymClass[]>([]);
+
+  const handleBookClass = (gymClassId: string) => {
+    // TODO: implement booking logic
+    Alert.alert('Booking', 'Class booked successfully!');
+  };
+
+  const getGymClasses = async () => {
+    await axios
+      .get('/gymclasses/daily')
+      .then(response => {
+        setGymClasses(response.data.gymClasses);
+      })
+      .catch(error => {
+        console.error('Error fetching gym classes:', error);
+      });
+  };
+
+  useEffect(() => {
+    getGymClasses();
+  }, []);
+
+  const renderItem = ({item}: {item: GymClass}) => (
+    <View style={{marginVertical: 10, padding: 10, borderBottomWidth: 1}}>
+      <Text>{item.name}</Text>
+      <Text>Instructor: {item.instructor}</Text>
+      <Text>Schedule: {item.datetime.toString()}</Text>
+      <Text>Capacity: {item.maxCapacity}</Text>
+      <Button title="Book Class" onPress={() => handleBookClass(item._id)} />
+    </View>
+  );
+
   return (
     <>
       <View style={styles.container}>
         <Header />
+      </View>
+      <View style={{padding: 10}}>
+        <FlatList
+          data={gymClasses}
+          keyExtractor={item => item._id}
+          renderItem={renderItem}
+        />
       </View>
       <View style={styles.listContainer}>
         <SectionList

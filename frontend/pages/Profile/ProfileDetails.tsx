@@ -11,8 +11,6 @@ import {
 import {IUserDetails} from '../../utility/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-var _userId: string | null;
-
 function ProfileDetails(): JSX.Element {
   const [isLoading, setLoading] = useState(true);
   const [userDetails, setUserDetails] = useState<IUserDetails>({
@@ -25,18 +23,19 @@ function ProfileDetails(): JSX.Element {
 
   const getUserDetails = async () => {
     try {
-      const _userId = await AsyncStorage.getItem('user-id');
-      const response = await axios.get(`/users/${_userId}`);
+      const userId = await AsyncStorage.getItem('user-id');
+      const response = await axios.get(`/users/${userId}`);
       setUserDetails(response.data);
     } catch (error) {
-      console.error(error);
+      console.error('Error fetching user details', error);
     } finally {
       setLoading(false);
     }
   };
 
   const updateUserDetails = async () => {
-    await axios.put(`/users/update/${_userId}`, userDetails).catch(error => {
+    const userId = await AsyncStorage.getItem('user-id');
+    await axios.put(`/users/update/${userId}`, userDetails).catch(error => {
       console.error(error);
     });
   };
