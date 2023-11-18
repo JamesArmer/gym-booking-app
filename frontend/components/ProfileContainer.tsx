@@ -7,6 +7,7 @@ type profileContainerProps = {
   text: string;
   pageLink: string;
   componentId: string;
+  userId: string;
 };
 
 class ProfileContainer extends Component<profileContainerProps> {
@@ -17,6 +18,7 @@ class ProfileContainer extends Component<profileContainerProps> {
           return Navigation.push(this.props.componentId, {
             component: {
               name: this.props.pageLink,
+              passProps: {userId: this.props.userId},
             },
           });
         }}>

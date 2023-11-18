@@ -1,8 +1,26 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import Header from '../components/Header';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Workout(): JSX.Element {
+  const [userId, setUserId] = useState('');
+
+  const loadUserId = async () => {
+    let storedUserId = await AsyncStorage.getItem('user-id');
+    if (storedUserId === null) {
+      console.error('Cannot find user ID');
+      storedUserId = '';
+    } else {
+      console.log(`Found user-id: ${storedUserId}`);
+    }
+    setUserId(storedUserId);
+  };
+
+  useEffect(() => {
+    loadUserId();
+  }, []);
+
   return (
     <ScrollView>
       <Header />

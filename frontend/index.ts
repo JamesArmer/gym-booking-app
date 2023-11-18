@@ -79,6 +79,7 @@ export const mainRoot = {
     },
   },
 };
+
 export const loginRoot = {
   root: {
     component: {

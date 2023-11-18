@@ -1,17 +1,35 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import SignUpButton from '../../components/buttons/SignUpButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type homeProps = {
   componentId: string;
 };
 
+type GreetingProps = {
+  name: string;
+};
+
 function Home(props: homeProps): JSX.Element {
-  type GreetingProps = {
-    name: string;
+  const [userId, setUserId] = useState('');
+
+  const loadUserId = async () => {
+    let storedUserId = await AsyncStorage.getItem('user-id');
+    if (storedUserId === null) {
+      console.error('Cannot find user ID');
+      storedUserId = '';
+    } else {
+      console.log(`Found user-id: ${storedUserId}`);
+    }
+    setUserId(storedUserId);
   };
+
+  useEffect(() => {
+    loadUserId();
+  }, []);
 
   const Greeting = (props: GreetingProps) => {
     return (

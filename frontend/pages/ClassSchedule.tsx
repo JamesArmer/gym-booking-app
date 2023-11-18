@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Button, SectionList, StyleSheet, Text, View} from 'react-native';
 import Header from '../components/Header';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type GymClass = {
   _id: string;
@@ -16,12 +17,24 @@ type GymClass = {
 };
 
 function ClassSchedule(): JSX.Element {
+  const [userId, setUserId] = useState('');
   const [sectionTitle, setSectionTitle] = useState('');
   const [gymClasses, setGymClasses] = useState<GymClass[]>([]);
 
   const handleBookClass = (gymClassId: string) => {
     // TODO: implement booking logic
     Alert.alert('Booking', 'Class booked successfully!');
+  };
+
+  const loadUserId = async () => {
+    let storedUserId = await AsyncStorage.getItem('user-id');
+    if (storedUserId === null) {
+      console.error('Cannot find user ID');
+      storedUserId = '';
+    } else {
+      console.log(`Found user-id: ${storedUserId}`);
+    }
+    setUserId(storedUserId);
   };
 
   const getGymClasses = async () => {
@@ -37,6 +50,7 @@ function ClassSchedule(): JSX.Element {
   };
 
   useEffect(() => {
+    loadUserId();
     getGymClasses();
   }, []);
 

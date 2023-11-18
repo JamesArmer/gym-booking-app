@@ -11,7 +11,11 @@ import {
 import {IUserDetails} from '../../utility/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function ProfileDetails(): JSX.Element {
+type profileDetailProps = {
+  userId: string;
+};
+
+function ProfileDetails(props: profileDetailProps): JSX.Element {
   const [isLoading, setLoading] = useState(true);
   const [userDetails, setUserDetails] = useState<IUserDetails>({
     firstName: '',
@@ -23,8 +27,7 @@ function ProfileDetails(): JSX.Element {
 
   const getUserDetails = async () => {
     try {
-      const userId = await AsyncStorage.getItem('user-id');
-      const response = await axios.get(`/users/${userId}`);
+      const response = await axios.get(`/users/${props.userId}`);
       setUserDetails(response.data);
     } catch (error) {
       console.error('Error fetching user details', error);
@@ -34,10 +37,11 @@ function ProfileDetails(): JSX.Element {
   };
 
   const updateUserDetails = async () => {
-    const userId = await AsyncStorage.getItem('user-id');
-    await axios.put(`/users/update/${userId}`, userDetails).catch(error => {
-      console.error(error);
-    });
+    await axios
+      .put(`/users/update/${props.userId}`, userDetails)
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   useEffect(() => {
