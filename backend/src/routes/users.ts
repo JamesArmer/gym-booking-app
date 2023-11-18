@@ -1,8 +1,7 @@
-import {IUser} from '../models/user';
+import {IUser, UserModel} from '../models/user';
 import {setToMidnightUTC} from '../utility/functions';
 import express, {NextFunction, Request, Response} from 'express';
 
-const UserModel = require('../models/user');
 var router = express.Router();
 
 /* GET single user by ID. */

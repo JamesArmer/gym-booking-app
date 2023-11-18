@@ -11,7 +11,7 @@ export interface IGymClass extends Document {
   instructor?: string;
 }
 
-const gymClassSchema = new Schema<IGymClass>(
+export const gymClassSchema = new Schema<IGymClass>(
   {
     name: {type: String, required: true},
     category: {type: String, required: true},
@@ -25,4 +25,4 @@ const gymClassSchema = new Schema<IGymClass>(
   {timestamps: true},
 );
 
-module.exports = model<IGymClass>('GymClass', gymClassSchema);
+export const GymClassModel = model<IGymClass>('GymClass', gymClassSchema);

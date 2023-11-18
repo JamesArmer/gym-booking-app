@@ -19,8 +19,6 @@ function Profile(props: profileProps) {
       if (storedUserId === null) {
         console.error('Cannot find user ID');
         storedUserId = '';
-      } else {
-        console.log(`Found user-id: ${storedUserId}`);
       }
       setUserId(storedUserId);
     };

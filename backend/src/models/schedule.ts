@@ -44,4 +44,4 @@ const scheduleSchema = new Schema<ISchedule>(
   {timestamps: true},
 );
 
-module.exports = model<ISchedule>('Schedule', scheduleSchema);
+export const ScheduleModel = model<ISchedule>('Schedule', scheduleSchema);

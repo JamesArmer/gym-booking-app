@@ -1,19 +1,38 @@
 import express, {NextFunction, Request, Response} from 'express';
+import {GymClassModel} from '../models/gymClass';
 
-const gymClassesModel = require('../models/gymClass');
 var router = express.Router();
 
-/* GET gym classes */
+/* GET gym class by ID */
+router.get(
+  '/id/:gymClassId',
+  async function (req: Request, res: Response, next: NextFunction) {
+    try {
+      let gymClass = await GymClassModel.findById(req.params.gymClassId);
+      if (!gymClass) {
+        res.status(404).json({
+          error: `Record with gymClassId ${req.params.userId} not found`,
+        });
+      } else {
+        res.send(gymClass);
+      }
+    } catch (error: any) {
+      console.error(error);
+      res.status(400).json({error: error.message});
+    }
+  },
+);
+
+/* GET gym classes in a daily view */
 router.get(
   '/daily',
   async function (req: Request, res: Response, next: NextFunction) {
     try {
       const today = new Date();
-      console.log(today);
       today.setHours(0, 0, 0, 0);
       const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
 
-      let gymClasses = await gymClassesModel.find({
+      let gymClasses = await GymClassModel.find({
         datetime: {
           $gte: today,
           $lt: tomorrow,
@@ -24,7 +43,7 @@ router.get(
 
       res.json({title: sectionTitle, gymClasses: gymClasses});
     } catch (error: any) {
-      console.error(error);
+      console.error(error.message);
       res.status(400).json({error: error.message});
     }
   },
@@ -36,7 +55,7 @@ router.post(
   async function (req: Request, res: Response, next: NextFunction) {
     try {
       let request = req.body;
-      let newClass = new gymClassesModel(request);
+      let newClass = new GymClassModel(request);
       await newClass.save();
       res.json({gymClassId: newClass._id});
     } catch (error: any) {

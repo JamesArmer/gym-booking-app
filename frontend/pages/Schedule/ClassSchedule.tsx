@@ -1,29 +1,36 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Button, SectionList, StyleSheet, Text, View} from 'react-native';
-import Header from '../components/Header';
+import {
+  ActivityIndicator,
+  Button,
+  SectionList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import Header from '../../components/Header';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Navigation} from 'react-native-navigation';
+import {IGymClass} from '../../utility/types';
 
-type GymClass = {
-  _id: string;
-  name: string;
-  category: string;
-  description: string;
-  datetime: Date;
-  duration: number;
-  maxCapacity: number;
-  currentCapacity: number;
-  instructor?: string;
+type classScheduleProps = {
+  componentId: string;
+  userId: string;
 };
 
-function ClassSchedule(): JSX.Element {
+function ClassSchedule(props: classScheduleProps): JSX.Element {
+  const [isLoading, setLoading] = useState(true);
   const [userId, setUserId] = useState('');
   const [sectionTitle, setSectionTitle] = useState('');
-  const [gymClasses, setGymClasses] = useState<GymClass[]>([]);
+  const [gymClasses, setGymClasses] = useState<IGymClass[]>([]);
 
   const handleBookClass = (gymClassId: string) => {
-    // TODO: implement booking logic
-    Alert.alert('Booking', 'Class booked successfully!');
+    return Navigation.push(props.componentId, {
+      component: {
+        name: 'BookClass',
+        passProps: {userId: userId, gymClassId: gymClassId},
+      },
+    });
   };
 
   const loadUserId = async () => {
@@ -31,22 +38,20 @@ function ClassSchedule(): JSX.Element {
     if (storedUserId === null) {
       console.error('Cannot find user ID');
       storedUserId = '';
-    } else {
-      console.log(`Found user-id: ${storedUserId}`);
     }
     setUserId(storedUserId);
   };
 
   const getGymClasses = async () => {
-    await axios
-      .get('/gymclasses/daily')
-      .then(response => {
-        setSectionTitle(response.data.title);
-        setGymClasses(response.data.gymClasses);
-      })
-      .catch(error => {
-        console.error('Error fetching gym classes:', error);
-      });
+    try {
+      const response = await axios.get('/gymclasses/daily');
+      setSectionTitle(response.data.title);
+      setGymClasses(response.data.gymClasses);
+    } catch (error) {
+      console.error('Error fetching gym classes:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -54,7 +59,7 @@ function ClassSchedule(): JSX.Element {
     getGymClasses();
   }, []);
 
-  const renderItem = ({item}: {item: GymClass}) => (
+  const renderItem = ({item}: {item: IGymClass}) => (
     <View style={styles.item}>
       <Text>{item.name}</Text>
       <Text>Instructor: {item.instructor}</Text>
@@ -77,18 +82,22 @@ function ClassSchedule(): JSX.Element {
         <Header />
       </View>
       <View style={styles.container}>
-        <SectionList
-          style={styles.sectionItem}
-          sections={[
-            {
-              title: sectionTitle,
-              data: gymClasses,
-            },
-          ]}
-          keyExtractor={item => item._id}
-          renderItem={renderItem}
-          renderSectionHeader={renderSectionHeader}
-        />
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <SectionList
+            style={styles.sectionItem}
+            sections={[
+              {
+                title: sectionTitle,
+                data: gymClasses,
+              },
+            ]}
+            keyExtractor={item => item._id}
+            renderItem={renderItem}
+            renderSectionHeader={renderSectionHeader}
+          />
+        )}
       </View>
     </>
   );
@@ -130,7 +139,7 @@ ClassSchedule.options = {
   },
   bottomTab: {
     text: 'Schedule',
-    icon: require('../public/calendar.png'),
+    icon: require('../../public/calendar.png'),
   },
 };
 

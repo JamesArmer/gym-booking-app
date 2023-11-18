@@ -8,7 +8,7 @@ export interface IUser extends Document {
   phoneNumber: string;
 }
 
-const userSchema = new Schema<IUser>(
+export const userSchema = new Schema<IUser>(
   {
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
@@ -19,4 +19,4 @@ const userSchema = new Schema<IUser>(
   {timestamps: true},
 );
 
-module.exports = model<IUser>('User', userSchema);
+export const UserModel = model<IUser>('User', userSchema);

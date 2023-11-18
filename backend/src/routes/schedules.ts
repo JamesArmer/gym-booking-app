@@ -1,6 +1,6 @@
 import express, {NextFunction, Request, Response} from 'express';
+import {ScheduleModel} from '../models/schedule';
 
-const ScheduleModel = require('../models/schedule');
 var router = express.Router();
 
 /* POST new schedule */

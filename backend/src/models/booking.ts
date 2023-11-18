@@ -1,26 +1,24 @@
-import {Document, Schema} from 'mongoose';
-import {IUser} from './user';
-import {IGymClass} from './gymClass';
+import {Document, Schema, model} from 'mongoose';
+import {IUser, userSchema} from './user';
+import {IGymClass, gymClassSchema} from './gymClass';
 
 interface IBooking extends Document {
-  user: IUser['_id'];
-  gymClass: IGymClass['_id'];
-  bookingTime: Date;
+  user: IUser;
+  gymClass: IGymClass;
 }
 
-const bookingSchema = new Schema<IBooking>({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
+const bookingSchema = new Schema<IBooking>(
+  {
+    user: {
+      type: userSchema,
+      required: true,
+    },
+    gymClass: {
+      type: gymClassSchema,
+      required: true,
+    },
   },
-  gymClass: {
-    type: Schema.Types.ObjectId,
-    ref: 'GymClass',
-    required: true,
-  },
-  bookingTime: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  {timestamps: true},
+);
+
+export const BookingModel = model<IBooking>('Booking', bookingSchema);
