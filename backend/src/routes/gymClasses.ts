@@ -8,7 +8,7 @@ router.get(
   '/id/:gymClassId',
   async function (req: Request, res: Response, next: NextFunction) {
     try {
-      let gymClass = await GymClassModel.findById(req.params.gymClassId);
+      let gymClass = await GymClassModel.findById(req.params.gymClassId).lean();
       if (!gymClass) {
         res.status(404).json({
           error: `Record with gymClassId ${req.params.userId} not found`,
@@ -37,7 +37,7 @@ router.get(
           $gte: today,
           $lt: tomorrow,
         },
-      });
+      }).lean();
 
       let sectionTitle = today.toDateString();
 

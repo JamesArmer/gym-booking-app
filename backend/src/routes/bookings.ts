@@ -7,16 +7,18 @@ var router = express.Router();
 
 /* GET all bookings by userId  */
 router.get(
-  '/:userId',
+  '/all/:userId',
   async function (req: Request, res: Response, next: NextFunction) {
     try {
-      let allUserBookings = BookingModel.find({
+      console.log(req.params.userId);
+      let allUserBookings = await BookingModel.find({
         user: {
-          $eq: req.params.userId,
+          // _id: req.params.userId,
+          firstName: 'James',
         },
       });
-      if (!allUserBookings) {
-        res.json({
+      if (allUserBookings.length == 0) {
+        res.status(404).json({
           error: `No bookings associated with userId ${req.params.userId}`,
         });
       } else {
@@ -34,8 +36,8 @@ router.post(
   '/create',
   async function (req: Request, res: Response, next: NextFunction) {
     try {
-      let user = await UserModel.findById(req.body.userId);
-      let gymClass = await GymClassModel.findById(req.body.gymClassId);
+      let user = await UserModel.findById(req.body.userId).lean();
+      let gymClass = await GymClassModel.findById(req.body.gymClassId).lean();
       let newBooking = new BookingModel({
         user: user,
         gymClass: gymClass,

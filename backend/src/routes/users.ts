@@ -9,7 +9,7 @@ router.get(
   '/:userId',
   async function (req: Request, res: Response, next: NextFunction) {
     try {
-      let user = await UserModel.findById(req.params.userId);
+      let user = await UserModel.findById(req.params.userId).lean();
       if (!user) {
         res
           .status(404)
