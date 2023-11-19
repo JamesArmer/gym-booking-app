@@ -9,7 +9,6 @@ import {
   View,
 } from 'react-native';
 import {IUserDetails} from '../../utility/types';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type profileDetailProps = {
   userId: string;

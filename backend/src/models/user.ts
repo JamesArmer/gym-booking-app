@@ -13,8 +13,8 @@ export const userSchema = new Schema<IUser>(
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
     dateOfBirth: {type: Date, required: true},
-    email: {type: String, required: true, unique: true},
-    phoneNumber: {type: String, required: true, unique: true},
+    email: {type: String, required: true},
+    phoneNumber: {type: String, required: true},
   },
   {timestamps: true},
 );

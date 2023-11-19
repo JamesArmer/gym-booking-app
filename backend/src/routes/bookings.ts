@@ -10,13 +10,12 @@ router.get(
   '/all/:userId',
   async function (req: Request, res: Response, next: NextFunction) {
     try {
-      console.log(req.params.userId);
-      let allUserBookings = await BookingModel.find({
-        user: {
-          // _id: req.params.userId,
-          firstName: 'James',
+      let allUserBookings = await BookingModel.find(
+        {
+          'user._id': req.params.userId,
         },
-      });
+        {gymClass: 1, _id: 0},
+      );
       if (allUserBookings.length == 0) {
         res.status(404).json({
           error: `No bookings associated with userId ${req.params.userId}`,
