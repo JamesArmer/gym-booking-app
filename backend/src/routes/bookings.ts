@@ -34,8 +34,8 @@ router.post(
   '/create',
   async function (req: Request, res: Response, next: NextFunction) {
     try {
-      let user = UserModel.findById(req.body.userId);
-      let gymClass = GymClassModel.findById(req.body.gymClassId);
+      let user = await UserModel.findById(req.body.userId);
+      let gymClass = await GymClassModel.findById(req.body.gymClassId);
       let newBooking = new BookingModel({
         user: user,
         gymClass: gymClass,
