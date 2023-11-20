@@ -1,9 +1,14 @@
 import React, {useState} from 'react';
 import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
-import SubmitButton from '../../components/buttons/SubmitButton';
+import SubmitButton from '../components/buttons/SubmitButton';
 import DatePicker from 'react-native-date-picker';
-import {validateEmail, validatePhoneNumber} from '../../utility/validation';
-import {IUserDetails} from '../../utility/types';
+import {
+  isUserEmailUnique,
+  isUserPhoneNumberUnique,
+  validateEmail,
+  validatePhoneNumber,
+} from '../utility/validation';
+import {IUserDetails} from '../utility/types';
 
 type signupProps = {
   componentId: string;
@@ -22,6 +27,8 @@ function UserSignup(props: signupProps): JSX.Element {
   });
   const [emailError, setEmailError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [phoneErrorMessage, setPhoneErrorMessage] = useState('');
 
   return (
     <View style={styles.sectionContainer}>
@@ -79,7 +86,9 @@ function UserSignup(props: signupProps): JSX.Element {
         }}
       />
       <Text style={styles.inputTitle}>Email</Text>
-      {emailError && <Text style={styles.errorMessage}>Invalid email</Text>}
+      {emailError && (
+        <Text style={styles.errorMessage}>{emailErrorMessage}</Text>
+      )}
       <TextInput
         style={[
           styles.inputContainer,
@@ -87,9 +96,12 @@ function UserSignup(props: signupProps): JSX.Element {
         ]}
         placeholder={placeholderText}
         value={userDetails.email}
-        onBlur={() => {
-          let isValid = validateEmail(userDetails.email);
-          setEmailError(!isValid);
+        onBlur={async () => {
+          const isValid = validateEmail(userDetails.email);
+          if (!isValid) setEmailErrorMessage('Invalid Email');
+          const isUnique = await isUserEmailUnique(userDetails.email);
+          if (!isUnique) setEmailErrorMessage('Email already in use');
+          setEmailError(!isValid || !isUnique);
         }}
         onChangeText={text =>
           setUserDetails(userDetails => ({
@@ -101,7 +113,7 @@ function UserSignup(props: signupProps): JSX.Element {
       />
       <Text style={styles.inputTitle}>Phone number</Text>
       {phoneError && (
-        <Text style={styles.errorMessage}>Invalid phone number</Text>
+        <Text style={styles.errorMessage}>{phoneErrorMessage}</Text>
       )}
       <TextInput
         style={[
@@ -110,9 +122,14 @@ function UserSignup(props: signupProps): JSX.Element {
         ]}
         placeholder={placeholderText}
         value={userDetails.phoneNumber}
-        onBlur={() => {
-          let isValid = validatePhoneNumber(userDetails.phoneNumber);
-          setPhoneError(!isValid);
+        onBlur={async () => {
+          const isValid = validatePhoneNumber(userDetails.phoneNumber);
+          if (!isValid) setPhoneErrorMessage('Invalid phone number');
+          const isUnique = await isUserPhoneNumberUnique(
+            userDetails.phoneNumber,
+          );
+          if (!isUnique) setPhoneErrorMessage('Phone number already in use');
+          setPhoneError(!isValid || !isUnique);
         }}
         onChangeText={text =>
           setUserDetails(userDetails => ({

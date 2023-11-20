@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export function validateEmail(email: string): boolean {
   // Regular expression for a basic email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -15,3 +17,28 @@ export function validatePhoneNumber(phoneNumber: string): boolean {
 
   return phoneNumberRegex.test(cleanedPhoneNumber);
 }
+
+export const isUserEmailUnique = async (email: string) => {
+  try {
+    const encodedEmail = encodeURIComponent(email);
+    const response = await axios.get(`/users/?email=${encodedEmail}`);
+    if (response.data._id) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error('Error fetching user email: ', error);
+  }
+};
+
+export const isUserPhoneNumberUnique = async (phoneNumber: string) => {
+  try {
+    const response = await axios.get(`/users/?phoneNumber=${phoneNumber}`);
+    if (response.data._id) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error('Error fetching user phone number');
+  }
+};

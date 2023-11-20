@@ -2,7 +2,7 @@ import {Navigation} from 'react-native-navigation';
 import Home from './pages/Home/Home';
 import Settings from './pages/Profile/Settings';
 import UserLogin from './pages/UserLogin';
-import UserSignup from './pages/Home/UserSignup';
+import UserSignup from './pages/UserSignup';
 import ClassSchedule from './pages/Schedule/ClassSchedule';
 import Workout from './pages/Workout';
 import Profile from './pages/Profile/Profile';
@@ -84,8 +84,14 @@ export const mainRoot = {
 
 export const loginRoot = {
   root: {
-    component: {
-      name: 'Login',
+    stack: {
+      children: [
+        {
+          component: {
+            name: 'Login',
+          },
+        },
+      ],
     },
   },
 };

@@ -1,36 +1,49 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import LoginButton from '../components/buttons/LoginButton';
+import SignUpButton from '../components/buttons/SignUpButton';
+import Header from '../components/Header';
 
-function UserLogin(): JSX.Element {
+type userLoginProps = {
+  componentId: string;
+};
+
+function UserLogin(props: userLoginProps): JSX.Element {
   const placeholderText = 'Input text here...';
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [otp, setOtp] = useState('');
 
   return (
-    <View style={styles.sectionContainer}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.sectionTitle}>Login</Text>
+    <>
+      <Header />
+      <View style={styles.sectionContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.sectionTitle}>Login</Text>
+        </View>
+        <Text style={styles.inputTitle}>Phone number</Text>
+        <TextInput
+          style={styles.inputContainer}
+          placeholder={placeholderText}
+          value={phoneNumber}
+          onChangeText={text => setPhoneNumber(text)}
+          maxLength={10}
+        />
+        <Text style={styles.inputTitle}>Password</Text>
+        <TextInput
+          style={styles.inputContainer}
+          placeholder={placeholderText}
+          value={otp}
+          onChangeText={text => setOtp(text)}
+          maxLength={6}
+        />
+        <LoginButton phoneNumber={phoneNumber} />
+        <View style={styles.subheadingContainer}>
+          <Text style={styles.subheading}>Not a user? Sign Up below!</Text>
+        </View>
+        <SignUpButton componentId={props.componentId} />
       </View>
-      <Text style={styles.inputTitle}>Username</Text>
-      <TextInput
-        style={styles.inputContainer}
-        placeholder={placeholderText}
-        value={username}
-        onChangeText={text => setUsername(text)}
-        maxLength={40}
-      />
-      <Text style={styles.inputTitle}>Password</Text>
-      <TextInput
-        style={styles.inputContainer}
-        placeholder={placeholderText}
-        value={password}
-        onChangeText={text => setPassword(text)}
-        maxLength={40}
-      />
-      <LoginButton />
-    </View>
+    </>
   );
 }
 
@@ -42,9 +55,19 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     alignItems: 'center',
+    paddingTop: 40,
   },
   sectionTitle: {
     fontSize: 24,
+    fontWeight: '600',
+    color: 'black',
+  },
+  subheadingContainer: {
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  subheading: {
+    fontSize: 20,
     fontWeight: '600',
     color: 'black',
   },

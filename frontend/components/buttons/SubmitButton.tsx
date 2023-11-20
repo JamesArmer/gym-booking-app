@@ -3,6 +3,7 @@ import {StyleSheet, TouchableOpacity, Text, View, Alert} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {mainRoot} from '../..';
 
 type submitButtonProps = {
   user: {
@@ -34,16 +35,12 @@ class SubmitButton extends Component<submitButtonProps> {
                   AsyncStorage.setItem('user-id', response.data.userId);
                 })
                 .then(() => {
-                  Navigation.push(this.props.componentId, {
-                    component: {
-                      name: 'Home',
-                    },
-                  });
                   Alert.alert(
                     'User Sign Up',
                     'Sign up successfully completed!',
                     [{text: 'OK', onPress: () => console.log('OK Pressed')}],
                   );
+                  return Navigation.setRoot(mainRoot);
                 })
                 .catch(error => {
                   console.error(error);

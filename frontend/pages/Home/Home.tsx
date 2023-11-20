@@ -46,8 +46,6 @@ function Home(props: homeProps): JSX.Element {
       <ScrollView>
         <View style={[styles.flexCenter]}>
           <Greeting name="James" />
-          <Text>Not a user? Hit the button below to sign up!</Text>
-          <SignUpButton componentId={props.componentId} />
         </View>
         <Footer />
       </ScrollView>

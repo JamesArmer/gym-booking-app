@@ -1,16 +1,42 @@
-import React, {Component} from 'react';
-import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
+import React, {Component, useState} from 'react';
+import {StyleSheet, TouchableOpacity, Text, View, Alert} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import {mainRoot} from '../..';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
-class LoginButton extends Component {
+type loginButtonProps = {
+  phoneNumber: string;
+};
+
+class LoginButton extends Component<loginButtonProps> {
+  handleLogin = async () => {
+    try {
+      const response = await axios.get(
+        `/users/?phoneNumber=${this.props.phoneNumber}`,
+      );
+      if (response.data.length < 1) {
+        Alert.alert('User Login', 'Phone number does not exist', [
+          {text: 'OK', onPress: () => {}},
+        ]);
+      } else {
+        const userId = response.data[0]._id;
+        await AsyncStorage.setItem('user-id', userId);
+        return Navigation.setRoot(mainRoot);
+      }
+    } catch (error) {
+      console.error(
+        `Error fetching userId with phone number ${this.props.phoneNumber}`,
+      );
+    }
+  };
   render() {
     return (
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.button}
-          onPress={async () => {
-            Navigation.setRoot(mainRoot);
+          onPress={() => {
+            this.handleLogin();
           }}>
           <Text style={{color: 'white'}}>Login</Text>
         </TouchableOpacity>

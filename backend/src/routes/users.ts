@@ -4,6 +4,41 @@ import express, {NextFunction, Request, Response} from 'express';
 
 var router = express.Router();
 
+/* GET single user */
+router.get(
+  '/',
+  async function (req: Request, res: Response, next: NextFunction) {
+    try {
+      const phoneNumber = req.query.phoneNumber;
+      const email = req.query.email;
+
+      if (!phoneNumber && !email) {
+        return res
+          .status(400)
+          .json({error: 'Please provide either phoneNumber or email.'});
+      }
+
+      let query: any = {};
+      if (phoneNumber) {
+        query.phoneNumber = phoneNumber;
+      }
+      if (email) {
+        query.email = email;
+      }
+
+      let user = await UserModel.findOne(query).lean();
+      if (!user) {
+        res.json({});
+      } else {
+        res.json(user);
+      }
+    } catch (error: any) {
+      console.error(error);
+      res.status(400).json({error: error.message});
+    }
+  },
+);
+
 /* GET single user by ID. */
 router.get(
   '/:userId',
