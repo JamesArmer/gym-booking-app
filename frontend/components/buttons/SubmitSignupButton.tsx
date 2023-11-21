@@ -5,7 +5,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {mainRoot} from '../..';
 
-type submitButtonProps = {
+type submitSignupButtonProps = {
   user: {
     firstName: string;
     lastName: string;
@@ -18,7 +18,7 @@ type submitButtonProps = {
   phoneError: boolean;
 };
 
-class SubmitButton extends Component<submitButtonProps> {
+class SubmitSignupButton extends Component<submitSignupButtonProps> {
   render() {
     return (
       <View style={styles.container}>
@@ -74,4 +74,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SubmitButton;
+export default SubmitSignupButton;

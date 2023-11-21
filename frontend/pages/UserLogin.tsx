@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import LoginButton from '../components/buttons/LoginButton';
-import SignUpButton from '../components/buttons/SignUpButton';
+import SignUpButton from '../components/buttons/SignupButton';
 import Header from '../components/Header';
 
 type userLoginProps = {

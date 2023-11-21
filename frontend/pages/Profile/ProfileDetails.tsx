@@ -9,6 +9,12 @@ import {
   View,
 } from 'react-native';
 import {IUserDetails} from '../../utility/types';
+import {
+  validatePhoneNumber,
+  validateEmail,
+  isUserProfilePhoneNumberUnique,
+  isUserProfileEmailUnique,
+} from '../../utility/validation';
 
 type profileDetailProps = {
   userId: string;
@@ -16,6 +22,10 @@ type profileDetailProps = {
 
 function ProfileDetails(props: profileDetailProps): JSX.Element {
   const [isLoading, setLoading] = useState(true);
+  const [emailError, setEmailError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [phoneErrorMessage, setPhoneErrorMessage] = useState('');
   const [userDetails, setUserDetails] = useState<IUserDetails>({
     firstName: '',
     lastName: '',
@@ -97,6 +107,11 @@ function ProfileDetails(props: profileDetailProps): JSX.Element {
             </View>
           </View>
           <View style={styles.sectionContainer}>
+            <View style={styles.bottomField}>
+              {emailError && (
+                <Text style={styles.errorMessage}>{emailErrorMessage}</Text>
+              )}
+            </View>
             <View style={styles.topField}>
               <Text style={styles.fieldName}>Email</Text>
               <TextInput
@@ -104,7 +119,16 @@ function ProfileDetails(props: profileDetailProps): JSX.Element {
                 value={userDetails.email}
                 maxLength={40}
                 onBlur={async () => {
-                  updateUserDetails();
+                  const isValid = validateEmail(userDetails.email);
+                  if (!isValid) setEmailErrorMessage('Invalid Email');
+
+                  const isUnique = await isUserProfileEmailUnique(
+                    userDetails.email,
+                    props.userId,
+                  );
+                  if (!isUnique) setEmailErrorMessage('Email already in use');
+                  setEmailError(!isValid || !isUnique);
+                  if (isValid && isUnique) updateUserDetails();
                 }}
                 onChangeText={text =>
                   setUserDetails(userDetails => ({
@@ -115,13 +139,29 @@ function ProfileDetails(props: profileDetailProps): JSX.Element {
               />
             </View>
             <View style={styles.bottomField}>
+              {phoneError && (
+                <Text style={styles.errorMessage}>{phoneErrorMessage}</Text>
+              )}
+            </View>
+            <View style={styles.bottomField}>
               <Text style={styles.fieldName}>Phone Number</Text>
               <TextInput
                 style={styles.field}
                 value={userDetails.phoneNumber}
-                maxLength={40}
+                maxLength={10}
                 onBlur={async () => {
-                  updateUserDetails();
+                  const isValid = validatePhoneNumber(userDetails.phoneNumber);
+                  if (!isValid) setPhoneErrorMessage('Invalid phone number');
+
+                  const isUnique = await isUserProfilePhoneNumberUnique(
+                    userDetails.phoneNumber,
+                    props.userId,
+                  );
+                  if (!isUnique)
+                    setPhoneErrorMessage('Phone number already in use');
+
+                  setPhoneError(!isValid || !isUnique);
+                  if (isValid && isUnique) updateUserDetails();
                 }}
                 onChangeText={text =>
                   setUserDetails(userDetails => ({
@@ -179,6 +219,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  errorMessage: {
+    color: 'red',
+    paddingLeft: 10,
+    paddingTop: 5,
   },
 });
 

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
-import SubmitButton from '../components/buttons/SubmitButton';
+import SubmitSignupButton from '../components/buttons/SubmitSignupButton';
 import DatePicker from 'react-native-date-picker';
 import {
   isUserEmailUnique,
@@ -140,7 +140,7 @@ function UserSignup(props: signupProps): JSX.Element {
         keyboardType="numeric"
         maxLength={10}
       />
-      <SubmitButton
+      <SubmitSignupButton
         user={userDetails}
         componentId={props.componentId}
         emailError={emailError}

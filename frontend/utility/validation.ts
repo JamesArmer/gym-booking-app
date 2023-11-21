@@ -21,7 +21,7 @@ export function validatePhoneNumber(phoneNumber: string): boolean {
 export const isUserEmailUnique = async (email: string) => {
   try {
     const encodedEmail = encodeURIComponent(email);
-    const response = await axios.get(`/users/?email=${encodedEmail}`);
+    const response = await axios.get(`/users/one?email=${encodedEmail}`);
     if (response.data._id) {
       return false;
     }
@@ -31,11 +31,50 @@ export const isUserEmailUnique = async (email: string) => {
   }
 };
 
+export const isUserProfileEmailUnique = async (
+  email: string,
+  userId: string,
+) => {
+  try {
+    const encodedEmail = encodeURIComponent(email);
+    const response = await axios.get(`/users/one?email=${encodedEmail}`);
+    if (response.data._id) {
+      if (response.data._id == userId) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  } catch (error) {
+    console.error('Error fetching user email: ', error);
+  }
+};
+
 export const isUserPhoneNumberUnique = async (phoneNumber: string) => {
   try {
-    const response = await axios.get(`/users/?phoneNumber=${phoneNumber}`);
+    const response = await axios.get(`/users/one?phoneNumber=${phoneNumber}`);
     if (response.data._id) {
       return false;
+    }
+    return true;
+  } catch (error) {
+    console.error('Error fetching user phone number');
+  }
+};
+
+export const isUserProfilePhoneNumberUnique = async (
+  phoneNumber: string,
+  userId: string,
+) => {
+  try {
+    const response = await axios.get(`/users/one?phoneNumber=${phoneNumber}`);
+    if (response.data._id) {
+      if (response.data._id == userId) {
+        return true;
+      } else {
+        return false;
+      }
     }
     return true;
   } catch (error) {

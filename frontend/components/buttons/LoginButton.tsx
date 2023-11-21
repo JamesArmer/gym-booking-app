@@ -15,14 +15,14 @@ class LoginButton extends Component<loginButtonProps> {
       const response = await axios.get(
         `/users/?phoneNumber=${this.props.phoneNumber}`,
       );
-      if (response.data.length < 1) {
+      if (response.data._id) {
+        const userId = response.data._id;
+        await AsyncStorage.setItem('user-id', userId);
+        return Navigation.setRoot(mainRoot);
+      } else {
         Alert.alert('User Login', 'Phone number does not exist', [
           {text: 'OK', onPress: () => {}},
         ]);
-      } else {
-        const userId = response.data[0]._id;
-        await AsyncStorage.setItem('user-id', userId);
-        return Navigation.setRoot(mainRoot);
       }
     } catch (error) {
       console.error(

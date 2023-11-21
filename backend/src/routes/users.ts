@@ -6,7 +6,7 @@ var router = express.Router();
 
 /* GET single user */
 router.get(
-  '/',
+  '/one',
   async function (req: Request, res: Response, next: NextFunction) {
     try {
       const phoneNumber = req.query.phoneNumber;
