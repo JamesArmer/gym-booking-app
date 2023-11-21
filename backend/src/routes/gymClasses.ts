@@ -37,7 +37,9 @@ router.get(
           $gte: today,
           $lt: tomorrow,
         },
-      }).lean();
+      })
+        .sort({datetime: 1})
+        .lean();
 
       let sectionTitle = today.toDateString();
 

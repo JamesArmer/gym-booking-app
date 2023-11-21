@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  Image,
   StyleSheet,
   Text,
   View,
@@ -17,16 +18,20 @@ type bookingHistoryProps = {
 function BookingHistory(props: bookingHistoryProps): JSX.Element {
   const [isLoading, setLoading] = useState(true);
   const [gymClasses, setGymClasses] = useState<IGymClass[]>([]);
+  const [noData, setNoData] = useState(false);
 
   const getGymClasses = async () => {
     try {
       const response = await axios.get(`/bookings/all/${props.userId}`);
+      if (response.data.error) {
+        return setNoData(true);
+      }
       const mappedBookings = response.data.map(
         (booking: {gymClass: IGymClass}) => booking.gymClass,
       );
       setGymClasses(mappedBookings);
     } catch (error) {
-      console.error('Error fetching gym classes:', error);
+      console.error('Error fetching booking history:', error);
     } finally {
       setLoading(false);
     }
@@ -54,6 +59,15 @@ function BookingHistory(props: bookingHistoryProps): JSX.Element {
     <View style={styles.container}>
       {isLoading ? (
         <ActivityIndicator />
+      ) : noData ? (
+        <View style={styles.noDataContainer}>
+          <Image
+            style={styles.image}
+            source={require('../../public/book.png')}
+          />
+          <Text>No bookings to have been made 🫤{'\n'}</Text>
+          <Text>Head to the "Schedule" tab to book a class!</Text>
+        </View>
       ) : (
         <FlatList
           style={styles.sectionItem}
@@ -68,6 +82,11 @@ function BookingHistory(props: bookingHistoryProps): JSX.Element {
 
 const styles = StyleSheet.create({
   container: {},
+  noDataContainer: {
+    marginTop: 250,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   sectionHeader: {
     paddingLeft: 10,
     paddingRight: 10,
@@ -84,6 +103,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginVertical: 5,
     borderBottomWidth: 1,
+  },
+  image: {
+    marginVertical: 20,
   },
 });
 

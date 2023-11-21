@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Button,
@@ -19,10 +19,19 @@ type classScheduleProps = {
 };
 
 function ClassSchedule(props: classScheduleProps): JSX.Element {
+  const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [userId, setUserId] = useState('');
   const [sectionTitle, setSectionTitle] = useState('');
   const [gymClasses, setGymClasses] = useState<IGymClass[]>([]);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getGymClasses();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 600);
+  }, []);
 
   const handleBookClass = (gymClassId: string) => {
     return Navigation.push(props.componentId, {
@@ -96,6 +105,8 @@ function ClassSchedule(props: classScheduleProps): JSX.Element {
             keyExtractor={item => item._id}
             renderItem={renderItem}
             renderSectionHeader={renderSectionHeader}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
           />
         )}
       </View>

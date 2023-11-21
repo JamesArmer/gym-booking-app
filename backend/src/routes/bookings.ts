@@ -16,8 +16,8 @@ router.get(
         },
         {gymClass: 1, _id: 0},
       );
-      if (allUserBookings.length == 0) {
-        res.status(404).json({
+      if (allUserBookings.length < 1) {
+        res.json({
           error: `No bookings associated with userId ${req.params.userId}`,
         });
       } else {
