@@ -81,3 +81,9 @@ export const isUserProfilePhoneNumberUnique = async (
     console.error('Error fetching user phone number');
   }
 };
+
+export const isDateInPast = (date: Date): boolean => {
+  const currentDate = new Date();
+
+  return date < currentDate;
+};

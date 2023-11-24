@@ -16,6 +16,7 @@ type submitSignupButtonProps = {
   componentId: string;
   emailError: boolean;
   phoneError: boolean;
+  dateError: boolean;
 };
 
 class SubmitSignupButton extends Component<submitSignupButtonProps> {
@@ -27,7 +28,8 @@ class SubmitSignupButton extends Component<submitSignupButtonProps> {
           onPress={async () => {
             if (
               this.props.emailError === false &&
-              this.props.phoneError === false
+              this.props.phoneError === false &&
+              this.props.dateError === false
             ) {
               await axios
                 .post('/users/create', this.props.user)

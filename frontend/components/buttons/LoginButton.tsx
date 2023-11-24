@@ -13,7 +13,7 @@ class LoginButton extends Component<loginButtonProps> {
   handleLogin = async () => {
     try {
       const response = await axios.get(
-        `/users/?phoneNumber=${this.props.phoneNumber}`,
+        `/users/one?phoneNumber=${this.props.phoneNumber}`,
       );
       if (response.data._id) {
         const userId = response.data._id;

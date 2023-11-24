@@ -3,6 +3,7 @@ import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 import SubmitSignupButton from '../components/buttons/SubmitSignupButton';
 import DatePicker from 'react-native-date-picker';
 import {
+  isDateInPast,
   isUserEmailUnique,
   isUserPhoneNumberUnique,
   validateEmail,
@@ -27,8 +28,10 @@ function UserSignup(props: signupProps): JSX.Element {
   });
   const [emailError, setEmailError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
+  const [dateError, setDateError] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [phoneErrorMessage, setPhoneErrorMessage] = useState('');
+  const [dateErrorMessage, setDateErrorMessage] = useState('');
 
   return (
     <View style={styles.sectionContainer}>
@@ -62,9 +65,10 @@ function UserSignup(props: signupProps): JSX.Element {
         maxLength={40}
       />
       <Text style={styles.inputTitle}>Date of birth</Text>
+      {dateError && <Text style={styles.errorMessage}>{dateErrorMessage}</Text>}
       <TextInput
         editable={false}
-        style={styles.inputContainer}
+        style={[styles.inputContainer, dateError && styles.errorInputContainer]}
         value={userDetails.dateOfBirth.toLocaleDateString('en-GB')}
         keyboardType="numeric"
       />
@@ -80,6 +84,11 @@ function UserSignup(props: signupProps): JSX.Element {
             ...userDetails,
             dateOfBirth: date,
           }));
+          const isValid = isDateInPast(date);
+          if (!isValid) {
+            setDateErrorMessage('Date of birth cannot be in the future');
+          }
+          setDateError(!isValid);
         }}
         onCancel={() => {
           setOpen(false);
@@ -145,6 +154,7 @@ function UserSignup(props: signupProps): JSX.Element {
         componentId={props.componentId}
         emailError={emailError}
         phoneError={phoneError}
+        dateError={dateError}
       />
     </View>
   );
