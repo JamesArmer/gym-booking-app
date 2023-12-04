@@ -1,4 +1,8 @@
 import express, {NextFunction, Request, Response} from 'express';
+import usersRouter from './routes/users';
+import gymClassesRouter from './routes/gymClasses';
+import bookingsRouter from './routes/bookings';
+import schedulesRouter from './routes/schedules';
 
 require('dotenv').config();
 
@@ -25,11 +29,6 @@ connect().catch(err => console.log(err));
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-var usersRouter = require('./routes/users.ts');
-var gymClassesRouter = require('./routes/gymclasses.ts');
-var bookingsRouter = require('./routes/bookings.ts');
-var schedulesRouter = require('./routes/schedules.ts');
 
 var port = process.env.PORT || 3000;
 var app = express();
@@ -65,4 +64,4 @@ app.listen(port, function () {
   console.log('Backend listening on port ' + port);
 });
 
-module.exports = app;
+export default app;

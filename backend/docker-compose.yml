@@ -1,6 +1,13 @@
-version: '3.1'
+version: '3.8'
 
 services:
+  # node-server:
+  #   build:
+  #     dockerfile: ./Dockerfile
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
+
   mongo:
     image: mongo:latest
     restart: always
