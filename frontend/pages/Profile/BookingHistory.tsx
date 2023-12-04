@@ -43,15 +43,15 @@ function BookingHistory(props: bookingHistoryProps): JSX.Element {
 
   const renderItem = ({item}: {item: IGymClass}) => (
     <View style={styles.item}>
-      <Text>{item.name}</Text>
-      <Text>Description: {item.description}</Text>
+      <Text>{item.gymClassType.name}</Text>
+      <Text>Description: {item.gymClassType.description}</Text>
       <Text>Instructor: {item.instructor}</Text>
       <Text>
         Date & Time: {new Date(item.datetime).toLocaleDateString('en-GB')}{' '}
         {('0' + new Date(item.datetime).getHours()).slice(-2)}:
-        {new Date(item.datetime).getMinutes()}
+        {(new Date(item.datetime).getMinutes() + '0').slice(0, 2)}
       </Text>
-      <Text>Duration: {item.duration}</Text>
+      <Text>Duration: {item.gymClassType.duration}</Text>
     </View>
   );
 

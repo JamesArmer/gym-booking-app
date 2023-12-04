@@ -6,14 +6,19 @@ export interface IUserDetails {
   phoneNumber: string;
 }
 
-export interface IGymClass {
+export interface IGymClassType {
   _id: string;
   name: string;
   category: string;
   description: string;
-  datetime: Date;
   duration: number;
   maxCapacity: number;
+}
+
+export interface IGymClass {
+  _id: string;
+  gymClassType: IGymClassType;
+  datetime: Date;
   currentCapacity: number;
   instructor?: string;
 }

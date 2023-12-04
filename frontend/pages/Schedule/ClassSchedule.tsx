@@ -70,13 +70,13 @@ function ClassSchedule(props: classScheduleProps): JSX.Element {
 
   const renderItem = ({item}: {item: IGymClass}) => (
     <View style={styles.item}>
-      <Text>{item.name}</Text>
+      <Text>{item.gymClassType.name}</Text>
       <Text>Instructor: {item.instructor}</Text>
       <Text>
         Time: {('0' + new Date(item.datetime).getHours()).slice(-2)}:
         {(new Date(item.datetime).getMinutes() + '0').slice(0, 2)}
       </Text>
-      <Text>Capacity: {item.maxCapacity}</Text>
+      <Text>Capacity: {item.gymClassType.maxCapacity}</Text>
       <Button title="Book Class" onPress={() => handleBookClass(item._id)} />
     </View>
   );

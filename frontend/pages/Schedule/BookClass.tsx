@@ -22,12 +22,15 @@ function BookClass(props: bookClassProps): JSX.Element {
   const [isLoading, setLoading] = useState(true);
   const [gymClass, setGymClass] = useState<IGymClass>({
     _id: '',
-    name: '',
-    category: '',
-    description: '',
+    gymClassType: {
+      _id: '',
+      name: '',
+      category: '',
+      description: '',
+      duration: -1,
+      maxCapacity: -1,
+    },
     datetime: new Date(),
-    duration: -1,
-    maxCapacity: -1,
     currentCapacity: -1,
     instructor: '',
   });
@@ -53,11 +56,13 @@ function BookClass(props: bookClassProps): JSX.Element {
         <ActivityIndicator />
       ) : (
         <>
-          <Text style={styles.sectionTitle}>{gymClass.name}</Text>
+          <Text style={styles.sectionTitle}>{gymClass.gymClassType.name}</Text>
           <View style={styles.sectionContainer}>
             <View style={styles.topField}>
               <Text style={styles.fieldName}>Description:</Text>
-              <Text style={styles.field}>{gymClass.description}</Text>
+              <Text style={styles.field}>
+                {gymClass.gymClassType.description}
+              </Text>
             </View>
             <View style={styles.topField}>
               <Text style={styles.fieldName}>Date & Time:</Text>
@@ -67,12 +72,12 @@ function BookClass(props: bookClassProps): JSX.Element {
             </View>
             <View style={styles.topField}>
               <Text style={styles.fieldName}>Duration</Text>
-              <Text style={styles.field}>{gymClass.duration}</Text>
+              <Text style={styles.field}>{gymClass.gymClassType.duration}</Text>
             </View>
             <View style={styles.topField}>
               <Text style={styles.fieldName}>Capacity</Text>
               <Text style={styles.field}>
-                {gymClass.currentCapacity}/{gymClass.maxCapacity}
+                {gymClass.currentCapacity}/{gymClass.gymClassType.maxCapacity}
               </Text>
             </View>
             <View style={styles.bottomField}>
