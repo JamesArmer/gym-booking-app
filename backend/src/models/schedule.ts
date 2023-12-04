@@ -1,52 +1,74 @@
 import {Document, Schema, model} from 'mongoose';
 
+export interface IClass {
+  classTypeId: string;
+  time: string;
+}
+
+const classesSchema = new Schema<IClass>({
+  classTypeId: {type: String, required: true},
+  time: {type: String, required: true},
+});
+
 export interface ISchedule extends Document {
   sunday: {
     isEnabled: boolean;
-    classTimes: string[];
+    classes: IClass[];
   };
   monday: {
     isEnabled: boolean;
-    classTimes: string[];
+    classes: IClass[];
   };
   tuesday: {
     isEnabled: boolean;
-    classTimes: string[];
+    classes: IClass[];
   };
   wednesday: {
     isEnabled: boolean;
-    classTimes: string[];
+    classes: IClass[];
   };
   thursday: {
     isEnabled: boolean;
-    classTimes: string[];
+    classes: IClass[];
   };
   friday: {
     isEnabled: boolean;
-    classTimes: string[];
+    classes: IClass[];
   };
   saturday: {
     isEnabled: boolean;
-    classTimes: string[];
+    classes: IClass[];
   };
 }
 
 const scheduleSchema = new Schema<ISchedule>(
   {
-    sunday: {type: {isEnabled: Boolean, classTimes: [String]}, required: true},
-    monday: {type: {isEnabled: Boolean, classTimes: [String]}, required: true},
-    tuesday: {type: {isEnabled: Boolean, classTimes: [String]}, required: true},
+    sunday: {
+      type: {isEnabled: Boolean, classes: [classesSchema]},
+      required: true,
+    },
+    monday: {
+      type: {isEnabled: Boolean, classes: [classesSchema]},
+      required: true,
+    },
+    tuesday: {
+      type: {isEnabled: Boolean, classes: [classesSchema]},
+      required: true,
+    },
     wednesday: {
-      type: {isEnabled: Boolean, classTimes: [String]},
+      type: {isEnabled: Boolean, classes: [classesSchema]},
       required: true,
     },
     thursday: {
-      type: {isEnabled: Boolean, classTimes: [String]},
+      type: {isEnabled: Boolean, classes: [classesSchema]},
       required: true,
     },
-    friday: {type: {isEnabled: Boolean, classTimes: [String]}, required: true},
+    friday: {
+      type: {isEnabled: Boolean, classes: [classesSchema]},
+      required: true,
+    },
     saturday: {
-      type: {isEnabled: Boolean, classTimes: [String]},
+      type: {isEnabled: Boolean, classes: [classesSchema]},
       required: true,
     },
   },

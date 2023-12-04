@@ -1,7 +1,8 @@
 import express, {NextFunction, Request, Response} from 'express';
-import {ISchedule, ScheduleModel} from '../models/schedule';
+import {IClass, ISchedule, ScheduleModel} from '../models/schedule';
 import {GymClassModel} from '../models/gymClass';
 import {getNextDayOfWeekFromDate} from '../utility/functions';
+import {GymClassTypeModel} from '../models/gymClassType';
 
 var router = express.Router();
 
@@ -26,22 +27,20 @@ const createWeeklyGymClasses = (newSchedule: ISchedule) => {
   let counter = 0;
   for (let day in newSchedule) {
     if (newSchedule[day as keyof ISchedule].isEnabled) {
-      newSchedule[day as keyof ISchedule].classTimes.forEach(
-        (classTime: string) => {
+      const classes = newSchedule[day as keyof ISchedule].classes.forEach(
+        async (clazz: IClass) => {
           let nextDayOfWeekOccurence = getNextDayOfWeekFromDate(
             new Date(),
             counter,
           );
-          nextDayOfWeekOccurence.setHours(Number(classTime.slice(0, 2)));
-          nextDayOfWeekOccurence.setMinutes(Number(classTime.slice(2, 4)));
+          nextDayOfWeekOccurence.setHours(Number(clazz.time.slice(0, 2)));
+          nextDayOfWeekOccurence.setMinutes(Number(clazz.time.slice(2, 4)));
+          const newClassType = await GymClassTypeModel.findById(
+            clazz.classTypeId,
+          ).lean();
           let newClass = new GymClassModel({
-            name: 'CrossFit WOD',
-            category: 'CrossFit',
-            description:
-              'Constantly varied functional fitness performed at high intensity',
+            gymClassType: newClassType,
             datetime: nextDayOfWeekOccurence,
-            duration: 60,
-            maxCapacity: 12,
             currentCapacity: 0,
           });
           newClass.save();
