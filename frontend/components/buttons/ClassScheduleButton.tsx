@@ -2,11 +2,13 @@ import React, {Component} from 'react';
 import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 
-type classScheduleButtonProps = {
+type navButtonProps = {
+  buttonText: string;
+  navComponent: string;
   componentId: string;
 };
 
-class ClassScheduleButton extends Component<classScheduleButtonProps> {
+class NavButton extends Component<navButtonProps> {
   render() {
     return (
       <View style={styles.container}>
@@ -15,11 +17,11 @@ class ClassScheduleButton extends Component<classScheduleButtonProps> {
           onPress={() => {
             return Navigation.push(this.props.componentId, {
               component: {
-                name: 'ClassSchedule',
+                name: this.props.navComponent,
               },
             });
           }}>
-          <Text style={{color: 'white'}}>Class Schedule</Text>
+          <Text style={{color: 'white'}}>{this.props.buttonText}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -40,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ClassScheduleButton;
+export default NavButton;

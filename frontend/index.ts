@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AdminPanel from './pages/Profile/AdminPanel';
 import BookClass from './pages/Schedule/BookClass';
 import ClassSchedule from './pages/Profile/Admin/ClassSchedule';
+import ClassTypes from './pages/Profile/Admin/ClassTypes';
 
 Navigation.registerComponent('Login', () => UserLogin);
 Navigation.registerComponent('Home', () => Home);
@@ -30,6 +31,7 @@ Navigation.registerComponent('BookingHistory', () => BookingHistory);
 Navigation.registerComponent('ProfileDetails', () => ProfileDetails);
 Navigation.registerComponent('PaymentDetails', () => PaymentDetails);
 Navigation.registerComponent('ClassSchedule', () => ClassSchedule);
+Navigation.registerComponent('ClassTypes', () => ClassTypes);
 
 export const mainRoot = {
   root: {

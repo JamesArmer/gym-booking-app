@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import ClassScheduleButton from '../../components/buttons/ClassScheduleButton';
+import NavButton from '../../components/buttons/ClassScheduleButton';
 
 type adminPanelProps = {
   componentId: string;
@@ -10,7 +10,16 @@ function AdminPanel(props: adminPanelProps): JSX.Element {
   return (
     <View style={styles.flexCenter}>
       <Text>This is the admin panel</Text>
-      <ClassScheduleButton componentId={props.componentId} />
+      <NavButton
+        buttonText="Class Schedule"
+        navComponent="ClassSchedule"
+        componentId={props.componentId}
+      />
+      <NavButton
+        buttonText="Class Types"
+        navComponent="ClassTypes"
+        componentId={props.componentId}
+      />
     </View>
   );
 }
