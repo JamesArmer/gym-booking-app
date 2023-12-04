@@ -27,7 +27,7 @@ const createWeeklyGymClasses = (newSchedule: ISchedule) => {
   let counter = 0;
   for (let day in newSchedule) {
     if (newSchedule[day as keyof ISchedule].isEnabled) {
-      const classes = newSchedule[day as keyof ISchedule].classes.forEach(
+      newSchedule[day as keyof ISchedule].classes.forEach(
         async (clazz: IClass) => {
           let nextDayOfWeekOccurence = getNextDayOfWeekFromDate(
             new Date(),
@@ -35,6 +35,8 @@ const createWeeklyGymClasses = (newSchedule: ISchedule) => {
           );
           nextDayOfWeekOccurence.setHours(Number(clazz.time.slice(0, 2)));
           nextDayOfWeekOccurence.setMinutes(Number(clazz.time.slice(2, 4)));
+          nextDayOfWeekOccurence.setSeconds(0);
+          nextDayOfWeekOccurence.setMilliseconds(0);
           const newClassType = await GymClassTypeModel.findById(
             clazz.classTypeId,
           ).lean();
