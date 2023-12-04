@@ -74,7 +74,7 @@ function ClassSchedule(props: classScheduleProps): JSX.Element {
       <Text>Instructor: {item.instructor}</Text>
       <Text>
         Time: {('0' + new Date(item.datetime).getHours()).slice(-2)}:
-        {new Date(item.datetime).getMinutes()}
+        {(new Date(item.datetime).getMinutes() + '0').slice(0, 2)}
       </Text>
       <Text>Capacity: {item.maxCapacity}</Text>
       <Button title="Book Class" onPress={() => handleBookClass(item._id)} />

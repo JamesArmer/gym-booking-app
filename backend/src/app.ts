@@ -1,6 +1,7 @@
 import express, {NextFunction, Request, Response} from 'express';
 import usersRouter from './routes/users';
 import gymClassesRouter from './routes/gymClasses';
+import classTypesRouter from './routes/classTypes';
 import bookingsRouter from './routes/bookings';
 import schedulesRouter from './routes/schedules';
 
@@ -41,6 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
 app.use('/gymclasses', gymClassesRouter);
+app.use('/classtypes', classTypesRouter);
 app.use('/bookings', bookingsRouter);
 app.use('/schedules', schedulesRouter);
 

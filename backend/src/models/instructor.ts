@@ -15,4 +15,7 @@ const instructorSchema = new Schema<IInstructor>(
   {timestamps: true},
 );
 
-module.exports = model<IInstructor>('Instructor', instructorSchema);
+export const InstructorModel = model<IInstructor>(
+  'Instructor',
+  instructorSchema,
+);

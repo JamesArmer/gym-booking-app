@@ -1,6 +1,6 @@
 import {Document, Schema, model} from 'mongoose';
 
-export interface IClassType extends Document {
+export interface IGymClassType extends Document {
   name: string;
   category: string;
   description: string;
@@ -9,7 +9,7 @@ export interface IClassType extends Document {
   maxCapacity: number;
 }
 
-const classTypeSchema = new Schema<IClassType>(
+export const gymClassTypeSchema = new Schema<IGymClassType>(
   {
     name: {type: String, required: true},
     category: {type: String, required: true},
@@ -20,4 +20,7 @@ const classTypeSchema = new Schema<IClassType>(
   {timestamps: true},
 );
 
-module.exports = model<IClassType>('ClassType', classTypeSchema);
+export const GymClassTypeModel = model<IGymClassType>(
+  'ClassType',
+  gymClassTypeSchema,
+);

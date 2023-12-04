@@ -5,6 +5,23 @@ import {getNextDayOfWeekFromDate} from '../utility/functions';
 
 var router = express.Router();
 
+/* POST new schedule */
+router.post(
+  '/create',
+  async function (req: Request, res: Response, next: NextFunction) {
+    try {
+      let request = req.body;
+      let newSchedule = new ScheduleModel(request);
+      await newSchedule.save();
+      createWeeklyGymClasses(newSchedule.toObject());
+      res.json({scheduleId: newSchedule._id});
+    } catch (error: any) {
+      console.error(error);
+      res.status(400).json({error: error.message});
+    }
+  },
+);
+
 const createWeeklyGymClasses = (newSchedule: ISchedule) => {
   let counter = 0;
   for (let day in newSchedule) {
@@ -34,22 +51,5 @@ const createWeeklyGymClasses = (newSchedule: ISchedule) => {
     counter++;
   }
 };
-
-/* POST new schedule */
-router.post(
-  '/create',
-  async function (req: Request, res: Response, next: NextFunction) {
-    try {
-      let request = req.body;
-      let newSchedule = new ScheduleModel(request);
-      await newSchedule.save();
-      createWeeklyGymClasses(newSchedule.toObject());
-      res.json({scheduleId: newSchedule._id});
-    } catch (error: any) {
-      console.error(error);
-      res.status(400).json({error: error.message});
-    }
-  },
-);
 
 export default router;
