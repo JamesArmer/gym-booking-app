@@ -7,18 +7,18 @@ import {
   Text,
   View,
 } from 'react-native';
-import Header from '../../components/Header';
+import Header from '../components/Header';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Navigation} from 'react-native-navigation';
-import {IGymClass} from '../../utility/types';
+import {IGymClass} from '../utility/types';
 
 type classScheduleProps = {
   componentId: string;
   userId: string;
 };
 
-function ClassSchedule(props: classScheduleProps): JSX.Element {
+function Schedule(props: classScheduleProps): JSX.Element {
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [userId, setUserId] = useState('');
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
 });
 
-ClassSchedule.options = {
+Schedule.options = {
   topBar: {
     title: {
       text: 'Class Schedule',
@@ -150,8 +150,8 @@ ClassSchedule.options = {
   },
   bottomTab: {
     text: 'Schedule',
-    icon: require('../../public/calendar.png'),
+    icon: require('../public/calendar.png'),
   },
 };
 
-export default ClassSchedule;
+export default Schedule;

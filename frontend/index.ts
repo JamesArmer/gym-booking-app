@@ -1,11 +1,11 @@
 import {Navigation} from 'react-native-navigation';
-import Home from './pages/Home/Home';
+import Home from './pages/Home';
 import Settings from './pages/Profile/Settings';
 import UserLogin from './pages/UserLogin';
 import UserSignup from './pages/UserSignup';
-import ClassSchedule from './pages/Schedule/ClassSchedule';
+import Schedule from './pages/Schedule';
 import Workout from './pages/Workout';
-import Profile from './pages/Profile/Profile';
+import Profile from './pages/Profile';
 import axios from 'axios';
 import ProfileDetails from './pages/Profile/ProfileDetails';
 import MembershipDetails from './pages/Profile/MembershipDetails';
@@ -14,10 +14,11 @@ import PaymentDetails from './pages/Profile/PaymentDetails';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AdminPanel from './pages/Profile/AdminPanel';
 import BookClass from './pages/Schedule/BookClass';
+import ClassSchedule from './pages/Profile/Admin/ClassSchedule';
 
 Navigation.registerComponent('Login', () => UserLogin);
 Navigation.registerComponent('Home', () => Home);
-Navigation.registerComponent('Schedule', () => ClassSchedule);
+Navigation.registerComponent('Schedule', () => Schedule);
 Navigation.registerComponent('BookClass', () => BookClass);
 Navigation.registerComponent('Workout', () => Workout);
 Navigation.registerComponent('Profile', () => Profile);
@@ -28,6 +29,7 @@ Navigation.registerComponent('MembershipDetails', () => MembershipDetails);
 Navigation.registerComponent('BookingHistory', () => BookingHistory);
 Navigation.registerComponent('ProfileDetails', () => ProfileDetails);
 Navigation.registerComponent('PaymentDetails', () => PaymentDetails);
+Navigation.registerComponent('ClassSchedule', () => ClassSchedule);
 
 export const mainRoot = {
   root: {

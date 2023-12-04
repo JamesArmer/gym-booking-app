@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import SignUpButton from '../../components/buttons/SignupButton';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type homeProps = {
@@ -93,7 +92,7 @@ Home.options = {
   },
   bottomTab: {
     text: 'Home',
-    icon: require('../../public/home.png'),
+    icon: require('../public/home.png'),
   },
 };
 

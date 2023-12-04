@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import SettingsButton from '../../components/buttons/SettingsButton';
-import ProfileContainer from '../../components/ProfileContainer';
-import Header from '../../components/Header';
-import AdminButton from '../../components/buttons/AdminButton';
+import SettingsButton from '../components/buttons/SettingsButton';
+import ProfileContainer from '../components/ProfileContainer';
+import Header from '../components/Header';
+import AdminButton from '../components/buttons/AdminButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type profileProps = {
@@ -86,7 +86,7 @@ Profile.options = {
   },
   bottomTab: {
     text: 'Profile',
-    icon: require('../../public/user.png'),
+    icon: require('../public/user.png'),
   },
 };
 
