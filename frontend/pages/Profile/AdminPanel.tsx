@@ -11,7 +11,7 @@ function AdminPanel(props: adminPanelProps): JSX.Element {
     <View style={styles.flexCenter}>
       <Text>This is the admin panel</Text>
       <NavButton
-        buttonText="Class Schedule"
+        buttonText="Class Schedules"
         navComponent="ClassSchedule"
         componentId={props.componentId}
       />

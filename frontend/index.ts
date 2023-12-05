@@ -16,6 +16,7 @@ import AdminPanel from './pages/Profile/AdminPanel';
 import BookClass from './pages/Schedule/BookClass';
 import ClassSchedule from './pages/Profile/Admin/ClassSchedule';
 import ClassTypes from './pages/Profile/Admin/ClassTypes';
+import CreateClassType from './pages/Profile/Admin/ClassTypes/CreateClassType';
 
 Navigation.registerComponent('Login', () => UserLogin);
 Navigation.registerComponent('Home', () => Home);
@@ -32,6 +33,7 @@ Navigation.registerComponent('ProfileDetails', () => ProfileDetails);
 Navigation.registerComponent('PaymentDetails', () => PaymentDetails);
 Navigation.registerComponent('ClassSchedule', () => ClassSchedule);
 Navigation.registerComponent('ClassTypes', () => ClassTypes);
+Navigation.registerComponent('CreateClassType', () => CreateClassType);
 
 export const mainRoot = {
   root: {
